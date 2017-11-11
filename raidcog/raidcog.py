@@ -46,7 +46,7 @@ class raidcog:
                 description += "\n"
 
             em = discord.Embed(title=title, description=description, color=discord.Color.blue())
-            em.set_footer(text='This was sent to ' + context.message.channel)
+            em.set_footer(text='This was sent to ' + context.message.channel.name + " : " + str(context.message.channel.id))
 
             await self.bot.say(embed=em)
 
