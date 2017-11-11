@@ -34,6 +34,7 @@ class raidcog:
             description = ""
             for raid in data:
                 description += "**" + raid['title'] + "** [" + str(raid['id']) + "]\n"
+                description += raid['date'] + "\n"
                 for members in raid['members']:
                     description += " - " + members + "\n"
                 description += "\n"

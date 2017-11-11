@@ -1,15 +1,18 @@
 [{
   "id": 0,
   "title": "Thunderdoges Raid #1",
-  "members": ["Arrow", "Shibe", "someone else"]
+  "members": ["Arrow", "Shibe", "someone else"],
+  "date": "11/11/2017"
 },
 {
   "id": 1,
   "title": "Thunderdoges Raid #2",
-  "members": ["Scoofy", "Counter", "Yoshisaur", "Shibe"]
+  "members": ["Scoofy", "Counter", "Yoshisaur", "Shibe"],
+  "date": "11/11/2017"
 },
 {
   "id": 2,
   "title": "Losers raid",
-  "members": ["We don't care about these members", "People not in our discord"]
+  "members": ["We don't care about these members", "People not in our discord"],
+  "date": "11/11/2017"
 }]
