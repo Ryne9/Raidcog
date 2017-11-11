@@ -87,5 +87,19 @@ class raidcog:
                     return
         await self.bot.say("Couldn't find raid to join with ID " + str(id))
 
+    @_raid.command(pass_context=True, name='delete')
+    async def _delete(self, context, id: int):
+        # Your code will go here
+        with open('data/raidcog/raids.json') as data_file:
+            data = json.load(data_file)
+            for raid in data:
+                if raid['id'] == id:
+                    if raid['members'][0]['id'] == context.message.author.id:
+                        data.remove(raid)
+                        self.save_data(data)
+                        await self.bot.say("Removed the raid.")
+                    else:
+                        await self.bot.say("You are not the creator of this raid.")
+
 def setup(bot):
     bot.add_cog(raidcog(bot))
