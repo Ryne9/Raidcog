@@ -49,7 +49,6 @@ class raidcog:
             description = ""
             for raid in data:
                 date = datetime.datetime.strptime(raid['date'], '%Y-%m-%d %H:%M:%S')
-                loc_date = self.timezones[raid['timezone']].localize(date)
                 description += "**" + raid['title'] + "** [" + str(raid['id']) + "]\n"
                 description += str(date) + " " + raid['timezone'] + "\n"
                 for members in raid['members']:
