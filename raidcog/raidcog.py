@@ -13,6 +13,7 @@ class raidcog:
         self.bot = bot
         self.notification_task = bot.loop.create_task(self.spam())
         self.channel = ""
+        self.fmt = "%m/%d/%y%I:%M%p"
         self.timezones = {
             "EST": timezone('US/Eastern'),
             "E": timezone('US/Eastern'),
@@ -47,9 +48,10 @@ class raidcog:
             title = "Current raids:\n"
             description = ""
             for raid in data:
-                date = datetime.datetime.strptime(raid['date'], '%Y-%m-%d %H:%M:%S%z')
+                date = datetime.datetime.strptime(raid['date'], '%Y-%m-%d %H:%M:%S')
+                loc_date = self.timezones[raid['timezone']].localize(date)
                 description += "**" + raid['title'] + "** [" + str(raid['id']) + "]\n"
-                description += str(date) + "\n"
+                description += str(date) + " " + raid['timezone'] + "\n"
                 for members in raid['members']:
                     if members['id'] == raid['members'][0]['id']:
                         description += "** - " + members['name'] + " ** - Raid Leader\n"
@@ -67,7 +69,6 @@ class raidcog:
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
             dt = datetime.datetime.strptime(date + time, '%m/%d/%y%I:%M%p')
-            loc_dt = self.timezones[timezone].localize(dt)
             newRaid = {
                 'members': [{
                     'id':context.message.author.id,
@@ -75,7 +76,8 @@ class raidcog:
                 }],
                 'id': len(data),
                 'title': title,
-                'date': str(loc_dt)
+                'date': str(dt),
+                'timezone': timezone
             }
             data.append(newRaid)
         self.save_data(data)
