@@ -39,10 +39,14 @@ class raidcog:
             title = "Current raids:\n"
             description = ""
             for raid in data:
+                date = datetime.datetime.strptime(raid['date'], '%Y-%m-%d %H:%M:%S')
                 description += "**" + raid['title'] + "** [" + str(raid['id']) + "]\n"
                 description += raid['date'] + "\n"
                 for members in raid['members']:
-                    description += " - " + members['name'] + "\n"
+                    if members['id'] == raid['members'][0]['id']:
+                        description += "** - " + members['name'] + " ** - Raid Leader\n"
+                    else:
+                        description += " - " + members['name'] + "\n"
                 description += "\n"
 
             em = discord.Embed(title=title, description=description, color=discord.Color.blue())
@@ -109,7 +113,7 @@ class raidcog:
 
     async def spam(self):
         while 'raidcog' in self.bot.cogs:
-            await self._send_message(discord.get_channel(371724187766882304), "raidbot spam destroy")
+            await self._send_message(discord.Server.get_channel(371724187766882304), "raidbot spam destroy")
             await asyncio.sleep(20)
 
     def __unload(self):
