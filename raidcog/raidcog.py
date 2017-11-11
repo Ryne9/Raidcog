@@ -1,6 +1,7 @@
 import discord
 import json
 import datetime
+import asyncio
 from discord.ext import commands
 
 class raidcog:
@@ -8,6 +9,7 @@ class raidcog:
 
     def __init__(self, bot):
         self.bot = bot
+        self.notification_task = bot.loop.create_task(self.spam())
 
     def save_data(self, data):
         with open('data/raidcog/raids.json', 'w') as outfile:
@@ -100,6 +102,18 @@ class raidcog:
                         await self.bot.say("Removed the raid.")
                     else:
                         await self.bot.say("You are not the creator of this raid.")
+
+    async def _send_message(self, channel, message):
+        em = discord.Embed(description=message, color=discord.Color.green())
+        await self.bot.send_message(channel, embed=em)
+
+    async def spam(self):
+        while 'raidcog' in self.bot.cogs:
+            self._send_message("bot_maintenance", "raidbot spam destroy")
+            await asyncio.sleep(20)
+
+    def __unload(self):
+        self.notification_task.cancel()
 
 def setup(bot):
     bot.add_cog(raidcog(bot))
