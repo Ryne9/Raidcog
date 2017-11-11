@@ -24,10 +24,10 @@ class thunderutil:
             em.set_footer(text='This cog was made by Arrow.')
             await self.bot.say(embed=em)
 
-    @tu.command(pass_context=True, name='gc')
+    @_tu.command(pass_context=True, name='gc')
     async def _get_channel(self, context, id: int):
         object = discord.Server.get_channel(id)
-        
+
         await self.bot.say("Name: " + object.name + "\nID:" + str(object.id))
 
 
