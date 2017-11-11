@@ -10,6 +10,7 @@ class raidcog:
     def __init__(self, bot):
         self.bot = bot
         self.notification_task = bot.loop.create_task(self.spam())
+        self.channel = ""
 
     def save_data(self, data):
         with open('data/raidcog/raids.json', 'w') as outfile:
@@ -41,7 +42,7 @@ class raidcog:
             for raid in data:
                 date = datetime.datetime.strptime(raid['date'], '%Y-%m-%d %H:%M:%S')
                 description += "**" + raid['title'] + "** [" + str(raid['id']) + "]\n"
-                description += raid['date'] + "\n"
+                description += str(date) + "\n"
                 for members in raid['members']:
                     if members['id'] == raid['members'][0]['id']:
                         description += "** - " + members['name'] + " ** - Raid Leader\n"
@@ -107,14 +108,19 @@ class raidcog:
                     else:
                         await self.bot.say("You are not the creator of this raid.")
 
+    @_raid.command(pass_context=True, name='spamhere')
+    async def _spamhere(self, context):
+        self.channel = context.message.channel
+
     async def _send_message(self, channel, message):
         em = discord.Embed(description=message, color=discord.Color.green())
         await self.bot.send_message(channel, embed=em)
 
     async def spam(self):
         while 'raidcog' in self.bot.cogs:
-            await self._send_message(discord.Server.get_channel(371724187766882304), "raidbot spam destroy")
+            await self._send_message(self.channel, "raidbot spam destroy")
             await asyncio.sleep(20)
+
 
     def __unload(self):
         self.notification_task.cancel()
