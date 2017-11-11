@@ -60,7 +60,7 @@ class raidcog:
         #Your code will go here
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
-            dt = datetime.datetime.strptime(date + time, '%m/%d/%y%I:%M%p')
+            dt = datetime.datetime.strptime(date + time, '%m/%d/%y%I:%M%p%Z')
             newRaid = {
                 'members': [{
                     'id':context.message.author.id,
