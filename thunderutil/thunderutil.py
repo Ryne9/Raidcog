@@ -24,7 +24,7 @@ class thunderutil:
             await self.bot.say(embed=em)
 
     @_tu.command(pass_context=True, name='gc')
-    async def _get_channel(self, context, id: int):
+    async def _get_channel(self, context, id: str):
         object = discord.Server.get_channel(id)
 
         await self.bot.say("Name: " + object.name + "\nID:" + str(object.id))
