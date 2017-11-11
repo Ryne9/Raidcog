@@ -13,7 +13,7 @@ class raidcog:
         self.bot = bot
         self.notification_task = bot.loop.create_task(self.spam())
         self.channel = ""
-        self.fmt = "%m/%d/%y %I:%M%p"
+        self.fmt = "%b %d, %Y %I:%M"
         self.timezones = {
             "EST": timezone('US/Eastern'),
             "E": timezone('US/Eastern'),
