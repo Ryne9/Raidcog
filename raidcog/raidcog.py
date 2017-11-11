@@ -1,5 +1,6 @@
 import discord
 import json
+import datetime
 from discord.ext import commands
 
 class raidcog:
@@ -32,10 +33,9 @@ class raidcog:
             title = "Current raids:\n"
             description = ""
             for raid in data:
-                description += "**" + raid['title'] + "**\n"
+                description += "**" + raid['title'] + "** [" + raid['id'] + "]\n"
                 for members in raid['members']:
                     description += " - " + members + "\n"
-                description += "*join this raid by using .raid join " + str(raid['id']) + "*\n"
                 description += "\n"
 
             em = discord.Embed(title=title, description=description, color=discord.Color.blue())
@@ -44,14 +44,16 @@ class raidcog:
             await self.bot.say(embed=em)
 
     @_raid.command(pass_context=True, name='create')
-    async def _create(self, context, title):
+    async def _create(self, context, title, date, time):
         #Your code will go here
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
+            dt = datetime.strptime(date + time, '%m/%d/%y%I:%M%p')
             newRaid = {
                 'members': [context.message.author.name],
                 'id': len(data),
-                'title': title
+                'title': title,
+                'date': str(dt)
             }
             data.append(newRaid)
         with open('data/raidcog/raids.json', 'w') as outfile:
