@@ -1,0 +1,10 @@
+{
+    "AUTHOR" : "Arrow",
+    "INSTALL_MSG" : "D2 link ready for spamming.",
+    "NAME" : "clancog",
+    "SHORT" : "D2 clan link.",
+    "DESCRIPTION" : "Links to D2 clan for Thunderdoges",
+    "TAGS" : ["clan", "d2"],
+    "REQUIREMENTS" : [],
+    "HIDDEN" : false
+}
