@@ -6,12 +6,12 @@ from discord.ext import commands
 class raidcog:
     """Custom D2 raid cog for Thunderdoges"""
 
-    def _save_data(data):
-        with open('data/raidcog/raids.json', 'w') as outfile:
-            json.dump(data, outfile)
-
     def __init__(self, bot):
         self.bot = bot
+
+    def save_data(self, data):
+        with open('data/raidcog/raids.json', 'w') as outfile:
+            json.dump(data, outfile)
 
     @commands.group(pass_context=True, name='raid')
     async def _raid(self, context):
@@ -64,7 +64,7 @@ class raidcog:
                 'date': str(dt)
             }
             data.append(newRaid)
-        _save_data(data)
+        self.save_data(data)
         await self.bot.say("Added your raid " + title + " for " + str(dt) + ".")
 
     @_raid.command(pass_context=True, name='join')
@@ -78,7 +78,7 @@ class raidcog:
                         'id': context.message.author.id,
                         'name': context.message.author.name
                     })
-                    _save_data(data)
+                    self.save_data(data)
                 await self.bot.say("Joined raid " + raid['title'])
                 return
         await self.bot.say("Couldn't find raid to join with ID " + str(id))
