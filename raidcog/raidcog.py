@@ -49,12 +49,12 @@ class raidcog:
         #Your code will go here
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
-            dt = datetime.strptime(date + time, '%m/%d/%y%I:%M%p')
+            dt = datetime.datetime.strptime(date + time, '%m/%d/%y%I:%M%p')
             newRaid = {
                 'members': [context.message.author.name],
                 'id': len(data),
                 'title': title,
-                'date': str(dt)
+                'date': dt
             }
             data.append(newRaid)
         with open('data/raidcog/raids.json', 'w') as outfile:
