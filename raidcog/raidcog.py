@@ -42,7 +42,6 @@ class raidcog:
 
     @_raid.command(pass_context=True, name='list')
     async def _list(self, context):
-        #Your code will go here
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
             title = "Current raids:\n"
@@ -65,7 +64,6 @@ class raidcog:
 
     @_raid.command(pass_context=True, name='create')
     async def _create(self, context, title, date, time, timezone: str):
-        #Your code will go here
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
             dt = datetime.datetime.strptime(date + time, '%m/%d/%y%I:%M%p')
@@ -85,7 +83,6 @@ class raidcog:
 
     @_raid.command(pass_context=True, name='join')
     async def _join(self, context, id: int):
-        # Your code will go here
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
             for raid in data:
@@ -105,7 +102,6 @@ class raidcog:
 
     @_raid.command(pass_context=True, name='delete')
     async def _delete(self, context, id: int):
-        # Your code will go here
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
             for raid in data:
