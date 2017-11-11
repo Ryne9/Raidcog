@@ -74,6 +74,10 @@ class raidcog:
             data = json.load(data_file)
             for raid in data:
                 if raid['id'] == id:
+                    for member in raid['members']:
+                        if member['id'] == context.message.author.id:
+                            await self.bot.say("You are already in this raid.")
+                            return
                     raid['members'].append({
                         'id': context.message.author.id,
                         'name': context.message.author.name
