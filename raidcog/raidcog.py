@@ -68,7 +68,7 @@ class raidcog:
         await self.bot.say("Added your raid " + title + " for " + str(dt) + ".")
 
     @_raid.command(pass_context=True, name='join')
-    async def _join(self, context, id):
+    async def _join(self, context, id: int):
         # Your code will go here
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
