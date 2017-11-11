@@ -54,7 +54,7 @@ class raidcog:
                 'members': [context.message.author.name],
                 'id': len(data),
                 'title': title,
-                'date': dt
+                'date': str(dt)
             }
             data.append(newRaid)
         with open('data/raidcog/raids.json', 'w') as outfile:
