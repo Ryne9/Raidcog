@@ -9,7 +9,6 @@ class thunderutil:
 
     def __init__(self, bot):
         self.bot = bot
-        self.notification_task = bot.loop.create_task(self.spam())
 
     @commands.group(pass_context=True, name='tu')
     async def _tu(self, context):
