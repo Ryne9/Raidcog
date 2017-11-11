@@ -27,6 +27,7 @@ class thunderutil:
     @tu.command(pass_context=True, name='gc')
     async def _get_channel(self, context, id: int):
         object = discord.Server.get_channel(id)
+        
         await self.bot.say("Name: " + object.name + "\nID:" + str(object.id))
 
 

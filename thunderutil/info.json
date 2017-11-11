@@ -1,0 +1,10 @@
+{
+    "AUTHOR" : "Arrow",
+    "INSTALL_MSG" : "Thunderdoges util",
+    "NAME" : "thunderutil",
+    "SHORT" : "Run discord API commands from discord chat",
+    "DESCRIPTION" : "Run discord API commands from discord chat",
+    "TAGS" : ["td", "util"],
+    "REQUIREMENTS" : [],
+    "HIDDEN" : false
+}
