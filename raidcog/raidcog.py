@@ -1,4 +1,5 @@
 import discord
+import json
 from discord.ext import commands
 
 class raidcog:
@@ -12,7 +13,9 @@ class raidcog:
         """This does stuff!"""
 
         #Your code will go here
-        await self.bot.say("I can do stuff!")
+        with open('data\\raids.json') as data_file:
+            data = json.load(data_file)
+        await self.bot.say(data['title'])
 
 def setup(bot):
     bot.add_cog(raidcog(bot))
