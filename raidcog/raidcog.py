@@ -68,12 +68,21 @@ class raidcog:
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
             dt = datetime.datetime.strptime(date + time, '%m/%d/%y%I:%M%p')
+            finding = True
+            id = len(data)
+            while finding:
+                finding = False
+                for raid in data:
+                    if raid['id'] == id:
+                        id += 1
+                        finding = True
+                        break
             newRaid = {
                 'members': [{
                     'id':context.message.author.id,
                     'name':context.message.author.name
                 }],
-                'id': len(data),
+                'id': id,
                 'title': title,
                 'date': str(dt),
                 'timezone': timezone
