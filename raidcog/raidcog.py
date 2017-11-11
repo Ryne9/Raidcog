@@ -79,8 +79,8 @@ class raidcog:
                         'name': context.message.author.name
                     })
                     self.save_data(data)
-                await self.bot.say("Joined raid " + raid['title'])
-                return
+                    await self.bot.say("Joined raid " + raid['title'])
+                    return
         await self.bot.say("Couldn't find raid to join with ID " + str(id))
 
 def setup(bot):
