@@ -136,7 +136,6 @@ class raidcog:
             await self._send_message(self.channel, "raidbot spam destroy")
             await asyncio.sleep(20)
 
-
     def __unload(self):
         self.notification_task.cancel()
 
