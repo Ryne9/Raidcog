@@ -32,7 +32,7 @@ class raidcog:
             await self.bot.say(embed=em)
 
     @_raid.command(pass_context=True, name='list')
-    async def _list(self):
+    async def _list(self, context):
         #Your code will go here
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
@@ -46,7 +46,7 @@ class raidcog:
                 description += "\n"
 
             em = discord.Embed(title=title, description=description, color=discord.Color.blue())
-            em.set_footer(text='all of these raids are fake don\'t join them')
+            em.set_footer(text='This was sent to ' + context.message.channel)
 
             await self.bot.say(embed=em)
 
