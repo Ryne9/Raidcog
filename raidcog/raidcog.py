@@ -11,6 +11,10 @@ class raidcog:
         self.bot = bot
         self.notification_task = bot.loop.create_task(self.spam())
         self.channel = ""
+        self.timezones = {
+            "EST": "-05:00",
+            "PST": "-8:00"
+        }
 
     def save_data(self, data):
         with open('data/raidcog/raids.json', 'w') as outfile:
@@ -56,11 +60,11 @@ class raidcog:
             await self.bot.say(embed=em)
 
     @_raid.command(pass_context=True, name='create')
-    async def _create(self, context, title, date, time, timezone):
+    async def _create(self, context, title, date, time, timezone: str):
         #Your code will go here
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
-            dt = datetime.datetime.strptime(date + time + " " + timezone, '%m/%d/%y%I:%M%p %Z')
+            dt = datetime.datetime.strptime(date + time + self.timezones[timezone], '%m/%d/%y%I:%M%p%z')
             newRaid = {
                 'members': [{
                     'id':context.message.author.id,
