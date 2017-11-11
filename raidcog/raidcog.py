@@ -109,7 +109,7 @@ class raidcog:
 
     async def spam(self):
         while 'raidcog' in self.bot.cogs:
-            self._send_message("bot_maintenance", "raidbot spam destroy")
+            await self._send_message("bot_maintenance", "raidbot spam destroy")
             await asyncio.sleep(20)
 
     def __unload(self):
