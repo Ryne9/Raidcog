@@ -5,6 +5,6 @@
     "SHORT" : "Organizes D2 raids for Thunderdoges",
     "DESCRIPTION" : "Organizes D2 raids for Thunderdoges",
     "TAGS" : ["raid", "d2"],
-    "REQUIREMENTS" : [],
+    "REQUIREMENTS" : ["pytz"],
     "HIDDEN" : false
 }

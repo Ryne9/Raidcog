@@ -2,6 +2,8 @@ import discord
 import json
 import datetime
 import asyncio
+from pytz import timezone
+import pytz
 from discord.ext import commands
 
 class raidcog:
@@ -12,8 +14,10 @@ class raidcog:
         self.notification_task = bot.loop.create_task(self.spam())
         self.channel = ""
         self.timezones = {
-            "EST": "-05:00",
-            "PST": "-8:00"
+            "EST": timezone('US/Eastern'),
+            "E": timezone('US/Eastern'),
+            "PST": timezone('US/Pacific-New'),
+            "P": timezone('US/Pacific-New')
         }
 
     def save_data(self, data):
@@ -64,7 +68,8 @@ class raidcog:
         #Your code will go here
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
-            dt = datetime.datetime.strptime(date + time + self.timezones[timezone], '%m/%d/%y%I:%M%p%z')
+            dt = datetime.datetime.strptime(date + time, '%m/%d/%y%I:%M%p')
+            loc_dt = self.timezones[timezone].localize(dt)
             newRaid = {
                 'members': [{
                     'id':context.message.author.id,
@@ -72,7 +77,7 @@ class raidcog:
                 }],
                 'id': len(data),
                 'title': title,
-                'date': str(dt)
+                'date': str(loc_dt)
             }
             data.append(newRaid)
         self.save_data(data)
