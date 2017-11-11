@@ -1,4 +1,15 @@
+[{
+  "id": 0,
+  "title": "Thunderdoges Raid #1",
+  "members": ["Arrow", "Shibe", "someone else"]
+},
 {
-  "id": 0
-  "title": "Thunderdoges Raid #1"
-}
+  "id": 1,
+  "title": "Thunderdoges Raid #2",
+  "members": ["Scoofy", "Counter", "Yoshisaur", "Shibe"]
+},
+{
+  "id": 2,
+  "title": "Losers raid",
+  "members": ["We don't care about these members", "People not in our discord"]
+}]
