@@ -1,18 +1,43 @@
 [{
   "id": 0,
   "title": "Thunderdoges Raid #1",
-  "members": ["Arrow", "Shibe", "someone else"],
+  "members": [
+    {
+    "id": 123984,
+    "name": "Arrow"
+  },
+    {
+    "id": 1234235,
+    "name": "Shibe"
+  }
+  ],
   "date": "11/11/2017"
 },
 {
   "id": 1,
   "title": "Thunderdoges Raid #2",
-  "members": ["Scoofy", "Counter", "Yoshisaur", "Shibe"],
-  "date": "11/11/2017"
+  "members": [
+    {
+    "id": 123984,
+    "name": "Arrow"
+  },
+    {
+    "id": 1234235,
+    "name": "Shibe"
+  }
+  ],  "date": "11/11/2017"
 },
 {
   "id": 2,
   "title": "Losers raid",
-  "members": ["We don't care about these members", "People not in our discord"],
-  "date": "11/11/2017"
+  "members": [
+    {
+    "id": 5235,
+    "name": "Garbo"
+  },
+    {
+    "id": 51253,
+    "name": "Trash"
+  }
+  ],  "date": "11/11/2017"
 }]
