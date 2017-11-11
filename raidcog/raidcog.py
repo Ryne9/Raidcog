@@ -56,11 +56,11 @@ class raidcog:
             await self.bot.say(embed=em)
 
     @_raid.command(pass_context=True, name='create')
-    async def _create(self, context, title, date, time):
+    async def _create(self, context, title, date, time, timezone):
         #Your code will go here
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
-            dt = datetime.datetime.strptime(date + time, '%m/%d/%y%I:%M%p%Z')
+            dt = datetime.datetime.strptime(date + time + " " + timezone, '%m/%d/%y%I:%M%p %Z')
             newRaid = {
                 'members': [{
                     'id':context.message.author.id,
