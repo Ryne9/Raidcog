@@ -65,24 +65,23 @@ class raidcog:
             }
             data.append(newRaid)
         _save_data(data)
-
         await self.bot.say("Added your raid " + title + " for " + str(dt) + ".")
 
-        @_raid.command(pass_context=True, name='join')
-        async def _join(self, context, id):
-            # Your code will go here
-            with open('data/raidcog/raids.json') as data_file:
-                data = json.load(data_file)
-                for raid in data:
-                    if raid['id'] == id:
-                        raid['members'].append({
-                            'id': context.message.author.id,
-                            'name': context.message.author.name
-                        })
-                        _save_data(data)
-                    await self.bot.say("Joined raid " + raid['title'])
-                    return
-            self.bot.say("Couldn't find raid to join with ID " + str(id))
+    @_raid.command(pass_context=True, name='join')
+    async def _join(self, context, id):
+        # Your code will go here
+        with open('data/raidcog/raids.json') as data_file:
+            data = json.load(data_file)
+            for raid in data:
+                if raid['id'] == id:
+                    raid['members'].append({
+                        'id': context.message.author.id,
+                        'name': context.message.author.name
+                    })
+                     _save_data(data)
+                await self.bot.say("Joined raid " + raid['title'])
+                return
+        await self.bot.say("Couldn't find raid to join with ID " + str(id))
 
 def setup(bot):
     bot.add_cog(raidcog(bot))
