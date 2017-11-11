@@ -50,7 +50,7 @@ class raidcog:
             for raid in data:
                 date = datetime.datetime.strptime(raid['date'], '%Y-%m-%d %H:%M:%S')
                 description += "**" + raid['title'] + "** [" + str(raid['id']) + "]\n"
-                description += str(date.strftime(fmt=self.fmt)) + " " + raid['timezone'] + "\n"
+                description += str(date.strftime(self.fmt)) + " " + raid['timezone'] + "\n"
                 for members in raid['members']:
                     if members['id'] == raid['members'][0]['id']:
                         description += "** - " + members['name'] + " ** - Raid Leader\n"
