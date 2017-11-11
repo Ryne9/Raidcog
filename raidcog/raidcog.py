@@ -48,7 +48,7 @@ class raidcog:
             title = "Current raids:\n"
             description = ""
             for raid in data:
-                date = datetime.datetime.strptime(raid['date'], '%Y-%m-%d %H:%M:%S')
+                date = datetime.datetime.strptime(raid['date'], '%Y-%m-%d %H:%M:%S%z')
                 description += "**" + raid['title'] + "** [" + str(raid['id']) + "]\n"
                 description += str(date) + "\n"
                 for members in raid['members']:
