@@ -140,19 +140,6 @@ class raidcog:
                     else:
                         await self.bot.say("You are not the creator of this raid.")
 
-    @_raid.command(pass_context=True, name='tell')
-    async def _tell(self, context, id: int):
-        with open('data/raidcog/raids.json') as data_file:
-            data = json.load(data_file)
-            for raid in data:
-                if raid['id'] == id:
-                    if raid['members'][0]['id'] == context.message.author.id:
-                        data.remove(raid)
-                        self.save_data(data)
-                        await self.bot.say("Removed the raid.")
-                    else:
-                        await self.bot.say("You are not the creator of this raid.")
-
     @_raid.command(pass_context=True, name='clear')
     async def _clear(self):
         data = []
