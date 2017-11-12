@@ -2,7 +2,9 @@ import discord
 import json
 import datetime
 import asyncio
+from cogs.utils.dataIO import dataIO
 from pytz import timezone
+from cogs.utils import checks
 import pytz
 from discord.ext import commands
 
@@ -13,7 +15,7 @@ class raidcog:
         self.bot = bot
         self.notification_task = bot.loop.create_task(self.spam())
         self.channel = ""
-        self.fmt = "%b %d, %Y %I:%M"
+        self.fmt = "%b %d, %Y %I:%M%p"
         self.timezones = {
             "EST": timezone('US/Eastern'),
             "E": timezone('US/Eastern'),
@@ -75,7 +77,7 @@ class raidcog:
 
             dateBits = inDate.split('/')
             if len(dateBits) == 2:
-                date = inDate + "/" + datetime.strftime(today, '%y')
+                date = inDate + "/" + datetime.datetime.strftime(today, '%y')
             else:
                 date = inDate
 
@@ -156,6 +158,7 @@ class raidcog:
                         await self.bot.say("You are not the creator of this raid.")
 
     @_raid.command(pass_context=True, name='clear')
+    @checks.is_owner()
     async def _clear(self):
         data = []
         self.save_data(data)
@@ -177,5 +180,12 @@ class raidcog:
     def __unload(self):
         self.notification_task.cancel()
 
+def check_files():
+    f = "data/raidcog/raids.json"
+    if not dataIO.is_valid_json(f):
+        print("Creating default raids's settings.json...")
+        dataIO.save_json(f, [])
+
 def setup(bot):
+    check_files()
     bot.add_cog(raidcog(bot))
