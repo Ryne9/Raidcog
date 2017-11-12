@@ -83,7 +83,7 @@ class destinycog:
         url = self.baseUrl + '/User/SearchUsers/?q=' + q
         async with aiohttp.ClientSession(headers=self.header) as session:
             async with session.get(url) as resp:
-                results = await resp.json()
+                results = await resp.text()
 
         if 'error' in results:
             await self.bot.say("Couldn't search, something went wrong")
