@@ -205,6 +205,7 @@ class destinycog:
                     print("*****************************************************")
                     print(character)
                     output += "**Character**\n"
+                    output += "Id:" + str(character) + "\n"
                     output += "Power: " + \
                               str(results["Response"]["characters"]["data"][str(character)]['light']) + "\n"
                     output += "Percent to next level: " + \
