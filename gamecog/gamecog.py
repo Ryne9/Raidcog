@@ -92,6 +92,7 @@ class gamecog:
         if react is None:
             try:
                 try:
+                    await self.bot.delete_message(message)
                     await self.bot.clear_reactions(message)
                 except:
                     await self.bot.remove_reaction(message, chars["left"], self.bot.user)
