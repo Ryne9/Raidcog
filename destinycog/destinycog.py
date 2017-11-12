@@ -55,7 +55,7 @@ class destinycog:
             await self.bot.say("404 Error :(")
 
     @_d.command(pass_context=True, name='users')
-    async def _users(self, context, q: str, b: str):
+    async def _users(self, context, q: str, b):
         url = self.baseUrl + '/User/SearchUsers/?q=' + q
         async with aiohttp.ClientSession(headers=self.header) as session:
             async with session.get(url) as resp:
