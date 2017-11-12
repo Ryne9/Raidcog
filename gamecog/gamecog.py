@@ -1,5 +1,6 @@
 from PIL import Image
 import discord
+from discord.ext import commands
 
 class gamecog:
     """Weird experimental stuff"""
