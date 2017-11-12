@@ -59,7 +59,7 @@ class destinycog:
             await self.bot.say(embed=em)
 
     @_d.command(pass_context=True, name='fusers')
-    async def _get_channel(self, context, q: str):
+    async def _fusers(self, context, q: str):
         with open('data/destinycog/dump', 'wb') as f:
             c = pycurl.Curl()
             c.setopt(c.URL, self.baseUrl + '/User/SearchUsers/?q=' + q)
@@ -79,7 +79,7 @@ class destinycog:
             await self.bot.say("404 Error :(")
 
     @_d.command(pass_context=True, name='users')
-    async def _get_channel(self, q: str):
+    async def _users(self, context, q: str):
         url = self.baseUrl + '?q=' + q
         async with aiohttp.ClientSession(headers=self.header) as session:
             async with session.get(url) as resp:
