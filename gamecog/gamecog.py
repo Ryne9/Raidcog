@@ -45,13 +45,13 @@ class gamecog:
     def crop_player(self, face):
         box = (64 * 3, 64 * (charfacing[face] - 1), 64 * 4, 64 * charfacing[face])
         self.croppedp = pimage.crop(box)
-        //self.croppedp = self.croppedp.resize((32, 32), Image.ANTIALIAS)
+        # self.croppedp = self.croppedp.resize((32, 32), Image.ANTIALIAS)
         self.croppedp.save("data/gamecog/croppedplayer.png", quality=30)
 
     def crop_land(self):
         box = (self.x * 64, self.y * 64, self.x * 64 + 320, self.y * 64 + 320)
         self.cropped = image.crop(box)
-        //self.cropped = self.cropped.resize((160, 160), Image.ANTIALIAS)
+        # self.cropped = self.cropped.resize((160, 160), Image.ANTIALIAS)
         self.cropped.save("data/gamecog/croppedlevel.png", quality=30)
 
     def compost(self):
