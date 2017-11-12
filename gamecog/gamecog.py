@@ -70,20 +70,17 @@ class gamecog:
             await self.bot.say(embed=em)
 
     @_game.command(pass_context=True, name="start")
-    async def _start(self, context, message: discord.Message=None, timeout: int=30):
-        return await self.game(context, message, timeout)
+    async def _start(self, context, timeout: int=30):
+        return await self.game(context, timeout)
 
-    async def game(self, context, message: discord.Message=None, timeout: int=30):
+    async def game(self, context, timeout: int=30):
         expected = ["➡", "⬅", "⬆", "⬇"]
-        if not message:
-            message = \
-                await self.bot.send_file(context.message.channel, 'data/gamecog/composted.png')
-            await self.bot.add_reaction(message, chars["left"])
-            await self.bot.add_reaction(message, chars["up"])
-            await self.bot.add_reaction(message, chars["down"])
-            await self.bot.add_reaction(message, chars["right"])
-        else:
-            message = await self.bot.edit_message(message, "data/gamecog/composted.png")
+        message = \
+            await self.bot.send_file(context.message.channel, 'data/gamecog/composted.png')
+        await self.bot.add_reaction(message, chars["left"])
+        await self.bot.add_reaction(message, chars["up"])
+        await self.bot.add_reaction(message, chars["down"])
+        await self.bot.add_reaction(message, chars["right"])
         react = await self.bot.wait_for_reaction(
             message=message, user=context.message.author, timeout=timeout,
             emoji=expected
@@ -109,10 +106,10 @@ class gamecog:
                 self.crop_land()
             self.compost()
             try:
-                await self.bot.remove_reaction(message, chars["left"], context.message.author)
+                await self.bot.delete_message(message)
             except:
                 pass
-            return await self.game(context, message=message, timeout=timeout)
+            return await self.game(context, timeout=timeout)
         elif react == "right":
             self.crop_player("right")
             if self.x < 16:
@@ -120,10 +117,10 @@ class gamecog:
                 self.crop_land()
             self.compost()
             try:
-                await self.bot.remove_reaction(message, chars["right"], context.message.author)
+                await self.bot.delete_message(message)
             except:
                 pass
-            return await self.game(context, message=message, timeout=timeout)
+            return await self.game(context, timeout=timeout)
         elif react == "up":
             self.crop_player("up")
             if self.y > 0:
@@ -131,10 +128,10 @@ class gamecog:
                 self.crop_land()
             self.compost()
             try:
-                await self.bot.remove_reaction(message, chars["up"], context.message.author)
+                await self.bot.delete_message(message)
             except:
                 pass
-            return await self.game(context, message=message, timeout=timeout)
+            return await self.game(context, timeout=timeout)
         elif react == "down":
             self.crop_player("down")
             if self.y < 16:
@@ -142,10 +139,10 @@ class gamecog:
                 self.crop_land()
             self.compost()
             try:
-                await self.bot.remove_reaction(message, chars["down"], context.message.author)
+                await self.bot.delete_message(message)
             except:
                 pass
-            return await self.game(context, message=message, timeout=timeout)
+            return await self.game(context, timeout=timeout)
 
 
 def setup(bot):
