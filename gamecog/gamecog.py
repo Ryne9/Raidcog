@@ -43,3 +43,6 @@ class gamecog:
     @_game.command(pass_context=True, name='init')
     async def _init(self, context):
         await self.bot.send_file(context.message.channel, 'data/gamecog/composted.png')
+
+def setup(bot):
+    bot.add_cog(gamecog(bot))
