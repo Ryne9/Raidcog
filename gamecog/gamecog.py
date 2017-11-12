@@ -23,7 +23,7 @@ class gamecog:
         self.cropped.save("data/gamecog/croppedlevel.png")
 
         self.landcopy = self.cropped.copy()
-        self.position = ((self.width / 2 - self.pwidth), (self.height / 2 - self.pheight))
+        self.position = (int(self.width / 2 - self.pwidth), int(self.height / 2 - self.pheight))
         self.landcopy.paste(self.croppedp, self.position)
         self.landcopy.save("data/gamecog/composted.png")
 
