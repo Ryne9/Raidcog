@@ -19,7 +19,7 @@ class destinycog:
         self.classes = {
             "1": "Hunter",
             "2": "Warlock",
-            "3": "Titan"
+            "0": "Titan"
         }
         self.users = {
             "Counter": 16637904,
