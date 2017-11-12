@@ -1,0 +1,10 @@
+{
+    "AUTHOR" : "Arrow",
+    "INSTALL_MSG" : "D2 API resource",
+    "NAME" : "destinycog",
+    "SHORT" : "Bungie API",
+    "DESCRIPTION" : "Hooks into the Bungie API to fetch certain data",
+    "TAGS" : ["clan", "d2"],
+    "REQUIREMENTS" : ["pycurl"],
+    "HIDDEN" : false
+}
