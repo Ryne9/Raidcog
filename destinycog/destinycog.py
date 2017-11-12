@@ -154,7 +154,7 @@ class destinycog:
                 print(results)
                 id = results['Response']['destinyMemberships'][0]['membershipId']
                 type = results['Response']['destinyMemberships'][0]['membershipType']
-                url = self.baseUrl + '/Destiny2/' + type + '/Profile/' + str(id) + "/?components=" + c
+                url = self.baseUrl + '/Destiny2/' + str(type) + '/Profile/' + str(id) + "/?components=" + c
 
         async with aiohttp.ClientSession(headers=self.header) as session:
             async with session.get(url) as resp:
