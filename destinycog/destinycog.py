@@ -88,12 +88,12 @@ class destinycog:
                 output = ""
                 for user in results['Response']:
                     if 'psnDisplayName' in user.keys():
-                        psn = " " + user['psnDisplayName']
+                        psn = " psn: " + user['psnDisplayName']
                     else:
                         psn = ""
 
                     if 'blizzardDisplayName' in user.keys():
-                        bnet = " " + user['blizzardDisplayName']
+                        bnet = " bnet: " + user['blizzardDisplayName']
                     else:
                         bnet = ""
                     output += user['displayName'] + bnet + psn + "\n"
