@@ -205,6 +205,7 @@ class destinycog:
                     print("*****************************************************")
                     print(character)
                     await self.bot.say("https://www.bungie.net" + str(results["Response"]["characters"]["data"][str(character)]["emblemPath"]))
+                    await self.bot.say("https://www.bungie.net" + str(results["Response"]["characters"]["data"][str(character)]["emblemBackgroundPath"]))
                     output += "**Character**\n"
                     output += "Id: " + str(character) + "\n"
                     output += "Power: " + \
