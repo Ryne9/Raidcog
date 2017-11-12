@@ -108,7 +108,7 @@ class destinycog:
         # We have to know the encoding in order to print it to a text file
         # such as standard output.
         try:
-            await self.bot.say(output)
+            await self.bot.say(context.message.channel, output)
         except discord.errors.HTTPException:
             await self.bot.say("404 Error :(")
 
