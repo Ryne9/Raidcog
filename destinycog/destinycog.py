@@ -85,11 +85,11 @@ class destinycog:
             async with session.get(url) as resp:
                 results = await resp.text()
 
-        if 'error' in results:
-            await self.bot.say("Couldn't search, something went wrong")
-            return
-        await self.bot.say(str(results))
-        # self.headers = {}
+                if 'error' in results:
+                    await self.bot.say("Couldn't search, something went wrong")
+                    return
+                await self.bot.say(str(results))
+                # self.headers = {}
         # buffer = BytesIO()
         # c = pycurl.Curl()
         # c.setopt(c.URL, self.baseUrl + '/User/SearchUsers/?q=' + q)
