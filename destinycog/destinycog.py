@@ -37,7 +37,7 @@ class thunderutil:
         c.close()
 
         body = buffer.getvalue()
-        decodedbody = json.load(body.decode('iso-8859-1'))
+        decodedbody = json.dumps(body.decode('iso-8859-1'))
         # Body is a byte string.
         # We have to know the encoding in order to print it to a text file
         # such as standard output.
