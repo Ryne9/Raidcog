@@ -69,77 +69,78 @@ class gamecog:
 
     @_game.command(pass_context=True, name='init')
     async def _init(self, context, message: discord.Message=None, timeout: int=30):
-            if not message:
-                message = \
-                    await self.bot.send_file(context.message.channel, 'data/gamecog/composted.png')
-                await self.bot.add_reaction(message, chars["left"])
-                await self.bot.add_reaction(message, chars["up"])
-                await self.bot.add_reaction(message, chars["down"])
-                await self.bot.add_reaction(message, chars["right"])
-            else:
-                message = await self.bot.edit_message(message, "data/gamecog/composted.png")
-            react = await self.bot.wait_for_reaction(
-                message=message, user=ctx.message.author, timeout=timeout,
-                emoji=expected
-            )
-            if react is None:
+        expected = ["➡", "⬅", "⬆", "⬇"]
+        if not message:
+            message = \
+                await self.bot.send_file(context.message.channel, 'data/gamecog/composted.png')
+            await self.bot.add_reaction(message, chars["left"])
+            await self.bot.add_reaction(message, chars["up"])
+            await self.bot.add_reaction(message, chars["down"])
+            await self.bot.add_reaction(message, chars["right"])
+        else:
+            message = await self.bot.edit_message(message, "data/gamecog/composted.png")
+        react = await self.bot.wait_for_reaction(
+            message=message, user=context.message.author, timeout=timeout,
+            emoji=expected
+        )
+        if react is None:
+            try:
                 try:
-                    try:
-                        await self.bot.clear_reactions(message)
-                    except:
-                        await self.bot.remove_reaction(message, chars["left"], self.bot.user)
-                        await self.bot.remove_reaction(message, chars["up"], self.bot.user)
-                        await self.bot.remove_reaction(message, chars["down"], self.bot.user)
-                        await self.bot.remove_reaction(message, chars["right"], self.bot.user)
+                    await self.bot.clear_reactions(message)
                 except:
-                    pass
-                return None
-            reacts = {v: k for k, v in chars.items()}
-            react = reacts[react.reaction.emoji]
-            if react == "left":
-                self.crop_player("left")
-                if self.x > 0:
-                    self.x -= 1
-                    self.crop_land()
-                self.compost()
-                try:
-                    await self.bot.remove_reaction(message, chars["left"], context.message.author)
-                except:
-                    pass
-                return await self._init(context, message=message, timeout=timeout)
-            elif react == "right":
-                self.crop_player("right")
-                if self.x < 16:
-                    self.x += 1
-                    self.crop_land()
-                self.compost()
-                try:
-                    await self.bot.remove_reaction(message, chars["right"], context.message.author)
-                except:
-                    pass
-                return await self._init(context, message=message, timeout=timeout)
-            elif react == "up":
-                self.crop_player("up")
-                if self.y > 0:
-                    self.y -= 1
-                    self.crop_land()
-                self.compost()
-                try:
-                    await self.bot.remove_reaction(message, chars["up"], context.message.author)
-                except:
-                    pass
-                return await self._init(context, message=message, timeout=timeout)
-            elif react == "down":
-                self.crop_player("down")
-                if self.y < 16:
-                    self.y += 1
-                    self.crop_land()
-                self.compost()
-                try:
-                    await self.bot.remove_reaction(message, chars["down"], context.message.author)
-                except:
-                    pass
-                return await self._init(context, message=message, timeout=timeout)
+                    await self.bot.remove_reaction(message, chars["left"], self.bot.user)
+                    await self.bot.remove_reaction(message, chars["up"], self.bot.user)
+                    await self.bot.remove_reaction(message, chars["down"], self.bot.user)
+                    await self.bot.remove_reaction(message, chars["right"], self.bot.user)
+            except:
+                pass
+            return None
+        reacts = {v: k for k, v in chars.items()}
+        react = reacts[react.reaction.emoji]
+        if react == "left":
+            self.crop_player("left")
+            if self.x > 0:
+                self.x -= 1
+                self.crop_land()
+            self.compost()
+            try:
+                await self.bot.remove_reaction(message, chars["left"], context.message.author)
+            except:
+                pass
+            return await self._init(context, message=message, timeout=timeout)
+        elif react == "right":
+            self.crop_player("right")
+            if self.x < 16:
+                self.x += 1
+                self.crop_land()
+            self.compost()
+            try:
+                await self.bot.remove_reaction(message, chars["right"], context.message.author)
+            except:
+                pass
+            return await self._init(context, message=message, timeout=timeout)
+        elif react == "up":
+            self.crop_player("up")
+            if self.y > 0:
+                self.y -= 1
+                self.crop_land()
+            self.compost()
+            try:
+                await self.bot.remove_reaction(message, chars["up"], context.message.author)
+            except:
+                pass
+            return await self._init(context, message=message, timeout=timeout)
+        elif react == "down":
+            self.crop_player("down")
+            if self.y < 16:
+                self.y += 1
+                self.crop_land()
+            self.compost()
+            try:
+                await self.bot.remove_reaction(message, chars["down"], context.message.author)
+            except:
+                pass
+            return await self._init(context, message=message, timeout=timeout)
 
 
 def setup(bot):
