@@ -119,7 +119,7 @@ class raidcog:
                 if raid['id'] == id:
                     for member in raid['members']:
                         if member['id'] == context.message.author.id:
-                            raid['members'].remove(member)
+                            raid['members'].pop(member)
                             await self.bot.say("You left raid " + str(id) + ".")
                             if len(raid['members']) == 0:
                                 data.remove(raid)
