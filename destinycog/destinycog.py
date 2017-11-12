@@ -85,7 +85,7 @@ class destinycog:
         c.setopt(c.WRITEFUNCTION, buffer.write)
         c.setopt(c.VERBOSE, True)
         c.setopt(c.HEADERFUNCTION, self._header_function)
-        c.perform()
+        await c.perform()
         c.close()
 
         body = buffer.getvalue()
