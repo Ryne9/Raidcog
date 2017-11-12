@@ -88,15 +88,15 @@ class destinycog:
                 output = ""
                 for user in results['Response']:
                     if 'psnDisplayName' in user.keys():
-                        psn = " psn: " + user['psnDisplayName']
+                        psn = "\n - psn: " + user['psnDisplayName']
                     else:
                         psn = ""
 
                     if 'blizzardDisplayName' in user.keys():
-                        bnet = " bnet: " + user['blizzardDisplayName']
+                        bnet = "\n - bnet: " + user['blizzardDisplayName']
                     else:
                         bnet = ""
-                    output += user['displayName'] + bnet + psn + "\n"
+                    output += "**" + user['displayName'] + "**" + bnet + psn + "\n"
 
         if 'error' in results:
             await self.bot.say("Couldn't search, something went wrong")
