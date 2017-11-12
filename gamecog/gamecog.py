@@ -41,7 +41,7 @@ class gamecog:
         self.compost()
 
     def crop_player(self, face):
-        box = (64 * 3, 64 * charfacing[face] - 1, 64 * 4, 64 * charfacing[face])
+        box = (64 * 3, 64 * (charfacing[face] - 1), 64 * 4, 64 * charfacing[face])
         self.croppedp = pimage.crop(box)
         self.croppedp.save("data/gamecog/croppedplayer.png")
 
