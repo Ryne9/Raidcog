@@ -2,6 +2,13 @@ from PIL import Image
 import discord
 from discord.ext import commands
 
+chars = {
+    "right": "➡",
+    "left": "⬅",
+    "up": "⬆",
+    "down": "⬇"
+}
+
 class gamecog:
     """Weird experimental stuff"""
     def __init__(self, bot):
@@ -27,6 +34,8 @@ class gamecog:
         self.landcopy.paste(self.croppedp, self.position, self.croppedp)
         self.landcopy.save("data/gamecog/composted.png")
 
+        self.message = ""
+
     @commands.group(pass_context=True, name='game')
     async def _game(self, context):
         """Thunderdoge Game??"""
@@ -42,7 +51,12 @@ class gamecog:
 
     @_game.command(pass_context=True, name='init')
     async def _init(self, context):
-        await self.bot.send_file(context.message.channel, 'data/gamecog/composted.png')
+            message = \
+                await self.bot.send_file(context.message.channel, 'data/gamecog/composted.png')
+            await self.bot.add_reaction(message, chars["left"])
+            await self.bot.add_reaction(message, chars["up"])
+            await self.bot.add_reaction(message, chars["down"])
+            await self.bot.add_reaction(message, chars["right"])
 
 def setup(bot):
     bot.add_cog(gamecog(bot))
