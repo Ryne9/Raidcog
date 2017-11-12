@@ -160,7 +160,15 @@ class destinycog:
             async with session.get(url) as resp:
                 results = await resp.json()
                 print(results)
-                output = results['Response']
+                if c == str(200):
+                    output = ""
+                    for characters in results["Response"]["characters"]["data"]:
+                        output += "**Character**\n"
+                        output += "Power: " + str(characters['light']) + "\n"
+                        output += "Percent to next level: " + str(characters['light']) + "\n"
+                        output += "Class type: " + str(characters['classType']) + "\n"
+                else:
+                    output = results["Response"]
 
         if 'error' in results:
             await self.bot.say("Couldn't search, something went wrong")
