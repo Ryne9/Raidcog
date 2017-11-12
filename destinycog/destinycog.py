@@ -200,10 +200,11 @@ class destinycog:
             async with session.get(url) as resp:
                 results = await resp.json()
                 print(results)
-                output = "MembershipId: " + str(id) + "MembershipType: " + str(type) + "\n"
+                output = "MembershipId: " + str(id) + " MembershipType: " + str(type) + "\n"
                 for character in results["Response"]["characters"]["data"]:
                     print("*****************************************************")
                     print(character)
+                    await self.bot.say("https://www.bungie.net" + str(results["Response"]["characters"]["data"][str(character)]["emblemPath"]))
                     output += "**Character**\n"
                     output += "Id: " + str(character) + "\n"
                     output += "Power: " + \
