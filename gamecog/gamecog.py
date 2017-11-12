@@ -56,7 +56,7 @@ class gamecog:
 
     def compost(self):
         landcopy = self.cropped.copy()
-        position = (128, 128)
+        position = (64, 64)
         landcopy.paste(self.croppedp, position, self.croppedp)
         landcopy.save("data/gamecog/composted.png", quality=60)
 
