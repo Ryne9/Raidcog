@@ -84,11 +84,15 @@ class destinycog:
         async with aiohttp.ClientSession(headers=self.header) as session:
             async with session.get(url) as resp:
                 results = await resp.text()
+                print(results)
 
-                if 'error' in results:
-                    await self.bot.say("Couldn't search, something went wrong")
-                    return
-                await self.bot.say(str(results))
+        if 'error' in results:
+            await self.bot.say("Couldn't search, something went wrong")
+            return
+        try:
+            await self.bot.say(str(results))
+        except discord.errors.HTTPException:
+            await self.bot.say("Oops it broke :(")
                 # self.headers = {}
         # buffer = BytesIO()
         # c = pycurl.Curl()
