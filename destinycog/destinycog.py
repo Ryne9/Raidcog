@@ -36,11 +36,12 @@ class thunderutil:
         c.close()
 
         body = buffer.getvalue()
+        decodedBody = str(body.decode('iso-8859-1'))
         # Body is a byte string.
         # We have to know the encoding in order to print it to a text file
         # such as standard output.
         try:
-            await self.bot.say(str(body.decode('iso-8859-1')))
+            await self.bot.say(decodedBody)
         except discord.errors.HTTPException:
             await self.bot.say("404 Error :(")
 
