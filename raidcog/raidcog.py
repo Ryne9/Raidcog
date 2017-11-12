@@ -67,10 +67,23 @@ class raidcog:
             await self.bot.say(embed=em)
 
     @_raid.command(pass_context=True, name='create')
-    async def _create(self, context, title, date, time, timezone: str):
+    async def _create(self, context, title, inDate, inTime, timezone: str):
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
-            dt = datetime.datetime.strptime(date + time, '%m/%d/%y%I:%M%p')
+            today = datetime.datetime.today()
+            timeFormat = '%I:%M%p'
+
+            dateBits = inDate.split('/')
+            if len(dateBits) == 2:
+                date = inDate + "/" + datetime.strftime(today, '%y')
+            else:
+                date = inDate
+
+            timeBits = inTime.split(':')
+            if len(timeBits) == 1:
+                timeFormat = '%I%p'
+
+            dt = datetime.datetime.strptime(date + inTime, '%m/%d/%y' + timeFormat)
             finding = True
             id = len(data)
             while finding:
