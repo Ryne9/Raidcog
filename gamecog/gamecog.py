@@ -45,7 +45,7 @@ class gamecog:
     def crop_player(self, face):
         box = (64 * 3, 64 * (charfacing[face] - 1), 64 * 4, 64 * charfacing[face])
         self.croppedp = pimage.crop(box)
-        self.croppedp = self.cropped.resize((32, 32), Image.ANTIALIAS)
+        self.croppedp = self.croppedp.resize((32, 32), Image.ANTIALIAS)
         self.croppedp.save("data/gamecog/croppedplayer.png", quality=60)
 
     def crop_land(self):
