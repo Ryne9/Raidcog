@@ -145,6 +145,22 @@ class destinycog:
         except discord.errors.HTTPException:
             await self.bot.say("Oops it broke :(")
 
+    @_d.command(pass_context=True, name='profile')
+    async def _profile(self, context, q: str, c: str):
+        url = self.baseUrl + '/Destiny2/All/Profile/' + q + "/?components=" + c
+        async with aiohttp.ClientSession(headers=self.header) as session:
+            async with session.get(url) as resp:
+                results = await resp.json()
+                print(results)
+
+        if 'error' in results:
+            await self.bot.say("Couldn't search, something went wrong")
+            return
+        try:
+            await self.bot.say(str(results))
+        except discord.errors.HTTPException:
+            await self.bot.say("Oops it broke :(")
+
     @_d.command(pass_context=True, name='registerId')
     async def _register_id(self, context, q: str):
         with open('data/raidcog/raids.json') as data_file:
