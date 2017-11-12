@@ -39,7 +39,10 @@ class thunderutil:
         # Body is a byte string.
         # We have to know the encoding in order to print it to a text file
         # such as standard output.
-        await self.bot.say(body.decode('iso-8859-1'))
+        try:
+            await self.bot.say(str(body.decode('iso-8859-1')))
+        except discord.errors.HTTPException:
+            await self.bot.say("404 Error :(")
 
 
 def setup(bot):
