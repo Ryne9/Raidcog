@@ -55,7 +55,7 @@ class destinycog:
             await self.bot.say("404 Error :(")
 
     @_d.command(pass_context=True, name='users')
-    async def _users(self, context, q: str):
+    async def _users(self, context, q: str, b: str):
         url = self.baseUrl + '/User/SearchUsers/?q=' + q
         async with aiohttp.ClientSession(headers=self.header) as session:
             async with session.get(url) as resp:
@@ -63,16 +63,26 @@ class destinycog:
                 print(results)
                 output = ""
                 for user in results['Response']:
-                    if 'psnDisplayName' in user.keys():
-                        psn = "\n - psn: " + user['psnDisplayName']
-                    else:
-                        psn = ""
+                    if b is None:
+                        if 'psnDisplayName' in user.keys():
+                            psn = "\n - psn: " + user['psnDisplayName']
+                        else:
+                            psn = ""
 
-                    if 'blizzardDisplayName' in user.keys():
-                        bnet = "\n - bnet: " + user['blizzardDisplayName']
+                        if 'blizzardDisplayName' in user.keys():
+                            bnet = "\n - bnet: " + user['blizzardDisplayName']
+                        else:
+                            bnet = ""
+                        output += "**" + user['displayName'] + "**" + bnet + psn + "\n"
                     else:
-                        bnet = ""
-                    output += "**" + user['displayName'] + "**" + bnet + psn + "\n"
+                        if 'psnDisplayName' in user.keys():
+                            psn = "\n - psn: " + user['psnDisplayName']
+                        else:
+                            psn = ""
+
+                        if 'blizzardDisplayName' in user.keys():
+                            bnet = "\n - bnet: " + user['blizzardDisplayName']
+                            output += "**" + user['displayName'] + "**" + bnet + psn + "\n"
 
         if 'error' in results:
             await self.bot.say("Couldn't search, something went wrong")
