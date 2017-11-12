@@ -53,7 +53,6 @@ class gamecog:
         landcopy.paste(self.croppedp, position, self.croppedp)
         landcopy.save("data/gamecog/composted.png")
 
-
     @commands.group(pass_context=True, name='game')
     async def _game(self, context):
         """Thunderdoge Game??"""
@@ -68,8 +67,8 @@ class gamecog:
             await self.bot.say(embed=em)
 
     @_game.command(pass_context=True, name="start")
-    async def _start(self, context):
-        self.game(context)
+    async def _start(self, context, message: discord.Message=None, timeout: int=30):
+        return await self.game(context, message, timeout)
 
     async def game(self, context, message: discord.Message=None, timeout: int=30):
         expected = ["➡", "⬅", "⬆", "⬇"]
