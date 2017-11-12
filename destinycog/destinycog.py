@@ -186,7 +186,7 @@ class destinycog:
             await self.bot.say("Oops it broke :(")
 
     @_d.command(pass_context=True, name='chars')
-    async def _chars(self, context, q: str, c: str):
+    async def _chars(self, context, q: str):
         url = self.baseUrl + '/User/GetMembershipsById/' + str(self.users[q]) + '/-1/'
         async with aiohttp.ClientSession(headers=self.header) as session:
             async with session.get(url) as resp:
