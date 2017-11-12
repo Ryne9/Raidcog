@@ -1,5 +1,6 @@
 import discord
 import pycurl
+import json
 from io import BytesIO
 from discord.ext import commands
 
@@ -36,12 +37,12 @@ class thunderutil:
         c.close()
 
         body = buffer.getvalue()
-        decodedBody = str(body.decode('iso-8859-1'))
+        decodedbody = json.dump(body.decode('iso-8859-1'), sort_keys=True, indent=4, separators=(',', ': '))
         # Body is a byte string.
         # We have to know the encoding in order to print it to a text file
         # such as standard output.
         try:
-            await self.bot.say(decodedBody)
+            await self.bot.say(decodedbody)
         except discord.errors.HTTPException:
             await self.bot.say("404 Error :(")
 
