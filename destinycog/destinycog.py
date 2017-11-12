@@ -200,12 +200,12 @@ class destinycog:
             async with session.get(url) as resp:
                 results = await resp.json()
                 print(results)
-                output = ""
+                output = "MembershipId: " + str(id) + "MembershipType: " + type + "\n"
                 for character in results["Response"]["characters"]["data"]:
                     print("*****************************************************")
                     print(character)
                     output += "**Character**\n"
-                    output += "Id:" + str(character) + "\n"
+                    output += "Id: " + str(character) + "\n"
                     output += "Power: " + \
                               str(results["Response"]["characters"]["data"][str(character)]['light']) + "\n"
                     output += "Percent to next level: " + \
