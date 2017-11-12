@@ -27,14 +27,17 @@ class gamecog:
     def __init__(self, bot):
         self.bot = bot
 
-        self.cropped = ""
-        self.croppedp = ""
+        box = (self.x * 64, self.y * 64, self.x * 64 + 320, self.y * 64 + 320)
+        self.cropped = image.crop(box)
+        self.cropped.save("data/gamecog/croppedlevel.png")
+
+        box = (64 * 3, 0, 64 * 4, 64)
+        self.croppedp = pimage.crop(box)
+        self.croppedp.save("data/gamecog/croppedplayer.png")
 
         self.x = 320/64
         self.y = 320/64
 
-        self.crop_player("down")
-        self.crop_land()
         self.compost()
 
     def crop_player(self, face):
