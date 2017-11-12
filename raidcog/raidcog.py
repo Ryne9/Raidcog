@@ -75,7 +75,7 @@ class raidcog:
 
             dateBits = inDate.split('/')
             if len(dateBits) == 2:
-                date = inDate + "/" + datetime.strftime(today, '%y')
+                date = inDate + "/" + datetime.datetime.strftime(today, '%y')
             else:
                 date = inDate
 
