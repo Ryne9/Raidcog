@@ -61,14 +61,17 @@ class gamecog:
             prefix = context.prefix
             title = '**Thunderdoge Game**\n'
             description = '**Commands**\n\n'
-            description += '``{0}game init``: Boots up one of them vidya games.\n'
+            description += '``{0}game start``: Boots up one of them vidya games.\n'
 
             em = discord.Embed(title=title, description=description.format(prefix), color=discord.Color.blue())
             em.set_footer(text='This cog was made by Arrow.')
             await self.bot.say(embed=em)
 
-    @_game.command(pass_context=True, name='init')
-    async def _init(self, context, message: discord.Message=None, timeout: int=30):
+    @_game.command(pass_context=True, name="start")
+    async def _start(self, context):
+        self.game(context)
+
+    async def game(self, context, message: discord.Message=None, timeout: int=30):
         expected = ["➡", "⬅", "⬆", "⬇"]
         if not message:
             message = \
@@ -107,7 +110,7 @@ class gamecog:
                 await self.bot.remove_reaction(message, chars["left"], context.message.author)
             except:
                 pass
-            return await self._init(context, message=message, timeout=timeout)
+            return await self.game(context, message=message, timeout=timeout)
         elif react == "right":
             self.crop_player("right")
             if self.x < 16:
@@ -118,7 +121,7 @@ class gamecog:
                 await self.bot.remove_reaction(message, chars["right"], context.message.author)
             except:
                 pass
-            return await self._init(context, message=message, timeout=timeout)
+            return await self.game(context, message=message, timeout=timeout)
         elif react == "up":
             self.crop_player("up")
             if self.y > 0:
@@ -129,7 +132,7 @@ class gamecog:
                 await self.bot.remove_reaction(message, chars["up"], context.message.author)
             except:
                 pass
-            return await self._init(context, message=message, timeout=timeout)
+            return await self.game(context, message=message, timeout=timeout)
         elif react == "down":
             self.crop_player("down")
             if self.y < 16:
@@ -140,7 +143,7 @@ class gamecog:
                 await self.bot.remove_reaction(message, chars["down"], context.message.author)
             except:
                 pass
-            return await self._init(context, message=message, timeout=timeout)
+            return await self.game(context, message=message, timeout=timeout)
 
 
 def setup(bot):
