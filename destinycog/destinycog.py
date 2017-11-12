@@ -85,12 +85,15 @@ class destinycog:
             async with session.get(url) as resp:
                 results = await resp.text()
                 print(results)
+                output = ""
+                for user in results['Response']:
+                    output += user['displayName'] + "\n"
 
         if 'error' in results:
             await self.bot.say("Couldn't search, something went wrong")
             return
         try:
-            await self.bot.say(str(results))
+            await self.bot.say(str(output))
         except discord.errors.HTTPException:
             await self.bot.say("Oops it broke :(")
                 # self.headers = {}
