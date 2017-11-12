@@ -1,0 +1,10 @@
+{
+    "AUTHOR" : "Arrow",
+    "INSTALL_MSG" : "Thunderdoges game",
+    "NAME" : "gamecog",
+    "SHORT" : "Thunderdoges experimental game",
+    "DESCRIPTION" : "Thunderdoges experimental game",
+    "TAGS" : ["td", "game"],
+    "REQUIREMENTS" : [],
+    "HIDDEN" : false
+}
