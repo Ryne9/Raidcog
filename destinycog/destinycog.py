@@ -146,18 +146,28 @@ class destinycog:
             await self.bot.say("Oops it broke :(")
 
     @_d.command(pass_context=True, name='profile')
-    async def _profile(self, context, q: str, e: str,c: str):
-        url = self.baseUrl + '/Destiny2/' + e + '/Profile/' + q + "/?components=" + c
+    async def _profile(self, context, q: str, c: str):
+        url = self.baseUrl + '/User/GetMembershipsById/' + q + '/-1/'
         async with aiohttp.ClientSession(headers=self.header) as session:
             async with session.get(url) as resp:
                 results = await resp.json()
                 print(results)
 
+        id = resp['Response']['destinyMemberships']['membershipId']
+        type = resp['Response']['destinyMemberships']['membershipType']
+
+        url = self.baseUrl + '/Destiny2/' + type + '/Profile/' + id + "/?components=" + c
+        async with aiohttp.ClientSession(headers=self.header) as session:
+            async with session.get(url) as resp:
+                results = await resp.json()
+                print(results)
+                output = results['Response']
+
         if 'error' in results:
             await self.bot.say("Couldn't search, something went wrong")
             return
         try:
-            await self.bot.say(str(results))
+            await self.bot.say(str(output))
         except discord.errors.HTTPException:
             await self.bot.say("Oops it broke :(")
 
