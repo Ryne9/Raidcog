@@ -32,11 +32,11 @@ class raidcog:
             prefix = context.prefix
             title = '**Welcome to Thunderdoge\'s raid manager.**\n'
             description = '**Commands**\n\n'
-            description += '``{0}create``: Creates a new raid.\n'
-            description += '``{0}delete``: Deletes a raid you created.\n'
-            description += '``{0}join``: Joins a raid.\n'
-            description += '``{0}leave``: Leaves a raid.\n'
-            description += '``{0}list``: Displays all raids, active and upcoming.\n'
+            description += '``{0}raid create``: Creates a new raid.\n'
+            description += '``{0}raid delete``: Deletes a raid you created.\n'
+            description += '``{0}raid join [#]``: Joins a raid.\n'
+            description += '``{0}raid leave``: Leaves a raid.\n'
+            description += '``{0}raid list``: Displays all raids, active and upcoming.\n'
 
             em = discord.Embed(title=title, description=description.format(prefix), color=discord.Color.blue())
             em.set_footer(text='This cog was made by Arrow.')
