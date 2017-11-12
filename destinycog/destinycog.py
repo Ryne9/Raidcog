@@ -152,8 +152,8 @@ class destinycog:
             async with session.get(url) as resp:
                 results = await resp.json()
                 print(results)
-                id = results['Response']['destinyMemberships']['membershipId']
-                type = results['Response']['destinyMemberships']['membershipType']
+                id = results['Response']['destinyMemberships'][0]['membershipId']
+                type = results['Response']['destinyMemberships'][0]['membershipType']
                 url = self.baseUrl + '/Destiny2/' + type + '/Profile/' + id + "/?components=" + c
 
         async with aiohttp.ClientSession(headers=self.header) as session:
