@@ -162,11 +162,12 @@ class destinycog:
                 print(results)
                 if c == str(200):
                     output = ""
-                    for characters in results["Response"]["characters"]["data"]:
+                    for character in results["Response"]["characters"]["data"]:
+                        myjson = json.load(character)
                         output += "**Character**\n"
-                        output += "Power: " + str(characters['light']) + "\n"
-                        output += "Percent to next level: " + str(characters['light']) + "\n"
-                        output += "Class type: " + str(characters['classType']) + "\n"
+                        output += "Power: " + str(myjson['light']) + "\n"
+                        output += "Percent to next level: " + str(myjson['light']) + "\n"
+                        output += "Class type: " + str(myjson['classType']) + "\n"
                 else:
                     output = results["Response"]
 
