@@ -171,7 +171,7 @@ class destinycog:
                         output += "Percent to next level: " + \
                                   str(results["Response"]["characters"]["data"][str(character)]['percentToNextLevel']) \
                                   + "\n"
-                        output += "Class type: " + str(results["Response"]["characters"]["data"][str(character)]['classType']) + "\n"
+                        output += "Class type: " + str(results["Response"]["characters"]["data"][str(character)]['classType']) + "\n\n"
                 else:
                     output = results["Response"]
 
