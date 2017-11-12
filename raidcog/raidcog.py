@@ -3,6 +3,7 @@ import json
 import datetime
 import asyncio
 from pytz import timezone
+from cogs.utils import checks
 import pytz
 from discord.ext import commands
 
@@ -156,6 +157,7 @@ class raidcog:
                         await self.bot.say("You are not the creator of this raid.")
 
     @_raid.command(pass_context=True, name='clear')
+    @checks.is_owner()
     async def _clear(self):
         data = []
         self.save_data(data)
