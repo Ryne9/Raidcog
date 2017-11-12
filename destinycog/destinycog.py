@@ -163,8 +163,11 @@ class destinycog:
                 if c == str(200):
                     output = ""
                     for character in results["Response"]["characters"]["data"]:
+                        print("*****************************************************")
+                        print(character)
                         output += "**Character**\n"
-                        output += "Power: " + character['light'] + "\n"
+                        output += "Power: " + \
+                                  str(character['light']) + "\n"
                         output += "Percent to next level: " + str(character['percentToNextLevel']) + "\n"
                         output += "Class type: " + str(character['classType']) + "\n"
                 else:
