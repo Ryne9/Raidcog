@@ -37,6 +37,8 @@ class raidcog:
             description += '``{0}raid join #``: Joins a raid.\n'
             description += '``{0}raid leave``: Leaves a raid.\n'
             description += '``{0}raid list``: Displays all raids, active and upcoming.\n'
+            description += '\n'
+            description += 'Example: ``.raid create "THE RAID" 12/25/17 8:00pm PST``\n'
 
             em = discord.Embed(title=title, description=description.format(prefix), color=discord.Color.blue())
             em.set_footer(text='This cog was made by Arrow.')
