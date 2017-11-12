@@ -18,7 +18,7 @@ class thunderutil:
             prefix = context.prefix
             title = '**Destiny 2 API Utility**\n'
             description = '**Commands**\n\n'
-            description += '``{0}gc``: Retrieves channel by ID.\n'
+            description += '``{0}users <user>``: Retrieves list of users.\n'
 
             em = discord.Embed(title=title, description=description.format(prefix), color=discord.Color.blue())
             em.set_footer(text='This cog was made by Arrow.')
@@ -37,7 +37,7 @@ class thunderutil:
         c.close()
 
         body = buffer.getvalue()
-        decodedbody = json.dump(body.decode('iso-8859-1'), sort_keys=True, indent=4, separators=(',', ': '))
+        decodedbody = json.load(body.decode('iso-8859-1'))
         # Body is a byte string.
         # We have to know the encoding in order to print it to a text file
         # such as standard output.
