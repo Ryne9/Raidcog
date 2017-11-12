@@ -26,23 +26,21 @@ class thunderutil:
 
     @_d.command(pass_context=True, name='users')
     async def _get_channel(self, context, q: str):
-        buffer = BytesIO()
-        c = pycurl.Curl()
-        c.setopt(c.URL, 'https://www.bungie.net/Platform/User/SearchUsers/?q=' + q)
-        c.setopt(c.HTTPHEADER, [
-            'X-API-Key: ' + self.apiKey
-        ])
-        c.setopt(c.WRITEDATA, buffer)
-        c.perform()
-        c.close()
-
-        body = buffer.getvalue()
-        decodedbody = json.dumps(body.decode('iso-8859-1'))
+        with open('data/destinycog/dump', 'wb') as f:
+            c = pycurl.Curl()
+            c.setopt(c.URL, 'https://www.bungie.net/Platform/User/SearchUsers/?q=' + q)
+            c.setopt(c.HTTPHEADER, [
+                'X-API-Key: ' + self.apiKey
+            ])
+            c.setopt(c.WRITEDATA, f)
+            c.setopt(c.VERBOSE, True)
+            c.perform()
+            c.close()
         # Body is a byte string.
         # We have to know the encoding in order to print it to a text file
         # such as standard output.
         try:
-            await self.bot.say(decodedbody)
+            await self.bot.say("Successful :D")
         except discord.errors.HTTPException:
             await self.bot.say("404 Error :(")
 
