@@ -164,7 +164,7 @@ class destinycog:
                     output = ""
                     for character in results["Response"]["characters"]["data"]:
                         output += "**Character**\n"
-                        output += "Power: " + str(character['light']) + "\n"
+                        output += "Power: " + character['light'] + "\n"
                         output += "Percent to next level: " + str(character['percentToNextLevel']) + "\n"
                         output += "Class type: " + str(character['classType']) + "\n"
                 else:
