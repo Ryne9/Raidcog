@@ -140,6 +140,12 @@ class raidcog:
                     else:
                         await self.bot.say("You are not the creator of this raid.")
 
+    @_raid.command(pass_context=True, name='clear')
+    async def _clear(self):
+        data = []
+        self.save_data(data)
+        await self.bot.say("Cleared all raids.")
+
     @_raid.command(pass_context=True, name='spamhere')
     async def _spamhere(self, context):
         self.channel = context.message.channel
