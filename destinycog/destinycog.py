@@ -45,6 +45,10 @@ class destinycog:
         # Now we can actually record the header name and value.
         self.headers[name] = value
 
+    def save_data(self, data):
+        with open('data/destinycog/users.json', 'w') as outfile:
+            json.dump(data, outfile)
+
     @commands.group(pass_context=True, name='d')
     async def _d(self, context):
         """Destiny 2 API"""
@@ -105,42 +109,45 @@ class destinycog:
             await self.bot.say(str(output))
         except discord.errors.HTTPException:
             await self.bot.say("Oops it broke :(")
-                # self.headers = {}
-        # buffer = BytesIO()
-        # c = pycurl.Curl()
-        # c.setopt(c.URL, self.baseUrl + '/User/SearchUsers/?q=' + q)
-        # c.setopt(c.HTTPHEADER, [
-        # ])
-        # c.setopt(c.WRITEFUNCTION, buffer.write)
-        # c.setopt(c.VERBOSE, True)
-        # c.setopt(c.HEADERFUNCTION, self._header_function)
-        # c.perform()
-        # c.close()
-        #
-        # body = buffer.getvalue()
-        #
-        # encoding = None
-        # if 'content-type' in self.headers:
-        #     content_type = self.headers['content-type'].lower()
-        #     match = re.search('charset=(\S+)', content_type)
-        #     if match:
-        #         encoding = match.group(1)
-        #         print('Decoding using %s' % encoding)
-        # if encoding is None:
-        #     # Default encoding for HTML is iso-8859-1.
-        #     # Other content types may have different default encoding,
-        #     # or in case of binary data, may have no encoding at all.
-        #     encoding = 'iso-8859-1'
-        #     print('Assuming encoding is %s' % encoding)
-        # output = body.decode(encoding)
-        # # Body is a byte string.
-        # # We have to know the encoding in order to print it to a text file
-        # # such as standard output.
-        # try:
-        #     await self.bot.say(output)
-        # except discord.errors.HTTPException:
-        #     await self.bot.say("404 Error :(")
 
+    @_d.command(pass_context=True, name='membershipId')
+    async def _membership_id(self, context, q: str):
+        url = self.baseUrl + '/User/SearchUsers/?q=' + q
+        async with aiohttp.ClientSession(headers=self.header) as session:
+            async with session.get(url) as resp:
+                results = await resp.json()
+                print(results)
+                output = ""
+                for user in results['Response']:
+                    if 'blizzardDisplayName' in user.keys():
+                        bnet = "\n - bnet: " + user['blizzardDisplayName']
+                    else:
+                        bnet = ""
+                    output += "**" + user['displayName'] + "**" + bnet + "\n - memId: " + user['membershipId'] + "\n"
+
+        if 'error' in results:
+            await self.bot.say("Couldn't search, something went wrong")
+            return
+        try:
+            await self.bot.say(str(output))
+        except discord.errors.HTTPException:
+            await self.bot.say("Oops it broke :(")
+
+    @_d.command(pass_context=True, name='registerId')
+    async def _register_id(self, context, q: str):
+        with open('data/raidcog/raids.json') as data_file:
+            data = json.load(data_file)
+            for user in data:
+                if user['id'] == context.message.author.id:
+                    user['membershipId'] = q
+                    self.save_data(data)
+                    return
+            user = {
+                "id": context.message.author.id,
+                "membershipId": q
+            }
+            data.append(user)
+            self.save_data(data)
 
 def setup(bot):
     bot.add_cog(destinycog(bot))
