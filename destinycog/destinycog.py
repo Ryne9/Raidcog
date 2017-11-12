@@ -17,34 +17,6 @@ class destinycog:
         self.baseUrl = 'https://www.bungie.net/Platform'
         self.headers = {}
 
-    def _header_function(self, header_line):
-        # HTTP standard specifies that headers are encoded in iso-8859-1.
-        # On Python 2, decoding step can be skipped.
-        # On Python 3, decoding step is required.
-        headerline = header_line.decode('iso-8859-1')
-
-        # Header lines include the first status line (HTTP/1.x ...).
-        # We are going to ignore all lines that don't have a colon in them.
-        # This will botch headers that are split on multiple lines...
-        if ':' not in headerline:
-            return
-
-        # Break the header line into header name and value.
-        name, value = headerline.split(':', 1)
-
-        # Remove whitespace that may be present.
-        # Header lines include the trailing newline, and there may be whitespace
-        # around the colon.
-        name = name.strip()
-        value = value.strip()
-
-        # Header names are case insensitive.
-        # Lowercase name here.
-        name = name.lower()
-
-        # Now we can actually record the header name and value.
-        self.headers[name] = value
-
     def save_data(self, data):
         with open('data/destinycog/users.json', 'w') as outfile:
             json.dump(data, outfile)
@@ -148,6 +120,34 @@ class destinycog:
             }
             data.append(user)
             self.save_data(data)
+
+    @_d.command(pass_context=True, name='groups')
+    async def _groups(self, context, q: str):
+        url = self.baseUrl + ' /GroupV2/Search/'
+        payload = {"name": q,
+                   "groupType": "Clan",
+                   "localeFilter": "en",
+                   "creationDate": "All",
+                   "sortBy": "Name",
+                   "type": "Search",
+                   "tagText": q,
+                   "itemsPerPage": 10,
+                   "currentPage": 1,
+                   "requestContinuationToken":"false"}
+        async with aiohttp.ClientSession(headers=self.header) as session:
+            async with session.post(url,
+                                    data=json.dumps(payload)) as resp:
+                results = await resp.json()
+                print(results)
+                output = "????"
+
+        if 'error' in results:
+            await self.bot.say("Couldn't search, something went wrong")
+            return
+        try:
+            await self.bot.say(str(output))
+        except discord.errors.HTTPException:
+            await self.bot.say("Oops it broke :(")
 
 def setup(bot):
     bot.add_cog(destinycog(bot))
