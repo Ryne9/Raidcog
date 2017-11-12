@@ -167,9 +167,11 @@ class destinycog:
                         print(character)
                         output += "**Character**\n"
                         output += "Power: " + \
-                                  str(character['light']) + "\n"
-                        output += "Percent to next level: " + str(character['percentToNextLevel']) + "\n"
-                        output += "Class type: " + str(character['classType']) + "\n"
+                                  str(results["Response"]["characters"]["data"][str(character)]['light']) + "\n"
+                        output += "Percent to next level: " + \
+                                  str(results["Response"]["characters"]["data"][str(character)]['percentToNextLevel']) \
+                                  + "\n"
+                        output += "Class type: " + str(results["Response"]["characters"]["data"][str(character)]['classType']) + "\n"
                 else:
                     output = results["Response"]
 
