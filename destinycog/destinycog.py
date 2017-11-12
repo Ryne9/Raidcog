@@ -17,9 +17,20 @@ class destinycog:
         self.baseUrl = 'https://www.bungie.net/Platform'
         self.headers = {}
         self.classes = {
+            "0": "Titan",
             "1": "Hunter",
-            "2": "Warlock",
-            "0": "Titan"
+            "2": "Warlock"
+        }
+        self.race = {
+            "0": "Human",
+            "1": "Awoken",
+            "2": "Exo"
+        }
+        self.period = {
+            "0": "None",
+            "1": "Daily",
+            "2": "AllTime",
+            "3": "Activity"
         }
         self.users = {
             "Counter": 16637904,
