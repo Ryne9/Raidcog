@@ -16,6 +16,11 @@ class destinycog:
         }
         self.baseUrl = 'https://www.bungie.net/Platform'
         self.headers = {}
+        self.classes = {
+            "1": "Hunter",
+            "2": "Warlock",
+            "3": "Titan"
+        }
 
     def save_data(self, data):
         with open('data/destinycog/users.json', 'w') as outfile:
@@ -171,7 +176,7 @@ class destinycog:
                         output += "Percent to next level: " + \
                                   str(results["Response"]["characters"]["data"][str(character)]['percentToNextLevel']) \
                                   + "\n"
-                        output += "Class type: " + str(results["Response"]["characters"]["data"][str(character)]['classType']) + "\n\n"
+                        output += "Class type: " + self.classes[str(results["Response"]["characters"]["data"][str(character)]['classType'])] + "\n\n"
                 else:
                     output = results["Response"]
 
