@@ -32,10 +32,11 @@ class raidcog:
             prefix = context.prefix
             title = '**Welcome to Thunderdoge\'s raid manager.**\n'
             description = '**Commands**\n\n'
-            description += '``{0}list``: Displays all raids, active and upcoming.\n'
             description += '``{0}create``: Creates a new raid.\n'
-            description += '``{0}join``: Joins a raid.\n'
             description += '``{0}delete``: Deletes a raid you created.\n'
+            description += '``{0}join``: Joins a raid.\n'
+            description += '``{0}leave``: Leaves a raid.\n'
+            description += '``{0}list``: Displays all raids, active and upcoming.\n'
 
             em = discord.Embed(title=title, description=description.format(prefix), color=discord.Color.blue())
             em.set_footer(text='This cog was made by Arrow.')
@@ -109,6 +110,19 @@ class raidcog:
                     await self.bot.say("Joined raid " + raid['title'])
                     return
         await self.bot.say("Couldn't find raid to join with ID " + str(id))
+
+    @_raid.command(pass_context=True, name='leave')
+    async def _leave(self, context, id: int):
+        with open('data/raidcog/raids.json') as data_file:
+            data = json.load(data_file)
+            for raid in data:
+                if raid['id'] == id:
+                    for member in raid['members']:
+                        if member['id'] == context.message.author.id:
+                            member.remove(member)
+                            await self.bot.say("You left raid " + str(id) + ".")
+                            self.save_data(data)
+        await self.bot.say("You weren't in raid " + str(id) + ".")
 
     @_raid.command(pass_context=True, name='delete')
     async def _delete(self, context, id: int):
