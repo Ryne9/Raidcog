@@ -35,13 +35,7 @@ class gamecog:
 
         self.crop_player("down")
         self.crop_land()
-
-        self.landcopy = self.cropped.copy()
-        self.position = (int(self.width / 2 - self.pwidth / 2), int(self.height / 2 - self.pwidth / 2))
-        self.landcopy.paste(self.croppedp, self.position, self.croppedp)
-        self.landcopy.save("data/gamecog/composted.png")
-
-        self.message = ""
+        self.compost()
 
     def crop_player(self, face):
         box = (64 * 3, 64 * charfacing[face] - 1, 64 * 4, 64 * charfacing[face])
@@ -54,10 +48,10 @@ class gamecog:
         self.cropped.save("data/gamecog/croppedlevel.png")
 
     def compost(self):
-        landcopy = self.cropped
+        landcopy = self.cropped.copy()
         position = (128, 128)
         landcopy.paste(self.croppedp, position, self.croppedp)
-        self.landcopy.save("data/gamecog/composted.png")
+        landcopy.save("data/gamecog/composted.png")
 
 
     @commands.group(pass_context=True, name='game')
