@@ -83,7 +83,7 @@ class destinycog:
         url = self.baseUrl + '/User/SearchUsers/?q=' + q
         async with aiohttp.ClientSession(headers=self.header) as session:
             async with session.get(url) as resp:
-                results = await resp.text()
+                results = await resp.json()
                 print(results)
                 output = ""
                 for user in results['Response']:
