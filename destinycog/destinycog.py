@@ -82,7 +82,7 @@ class destinycog:
         c.setopt(c.HTTPHEADER, [
             'X-API-Key: ' + self.apiKey
         ])
-        c.setopt(c.WRITEDATA, buffer)
+        c.setopt(c.WRITEFUNCTION, buffer.write)
         c.setopt(c.VERBOSE, True)
         c.setopt(c.HEADERFUNCTION, self._header_function)
         c.perform()
