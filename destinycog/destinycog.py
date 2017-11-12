@@ -21,6 +21,11 @@ class destinycog:
             "2": "Warlock",
             "3": "Titan"
         }
+        self.users = {
+            "Counter": 16637904,
+            "Yoshisaur": 16602151,
+            "Shibe": 16602171
+        }
 
     def save_data(self, data):
         with open('data/destinycog/users.json', 'w') as outfile:
@@ -141,10 +146,6 @@ class destinycog:
                     else:
                         bnet = ""
                     output += "**" + user['displayName'] + "**" + bnet + "\n - memId: " + user['membershipId'] + "\n"
-
-        if 'error' in results:
-            await self.bot.say("Couldn't search, something went wrong")
-            return
         try:
             await self.bot.say(str(output))
         except discord.errors.HTTPException:
@@ -179,10 +180,37 @@ class destinycog:
                         output += "Class type: " + self.classes[str(results["Response"]["characters"]["data"][str(character)]['classType'])] + "\n\n"
                 else:
                     output = results["Response"]
+        try:
+            await self.bot.say(str(output))
+        except discord.errors.HTTPException:
+            await self.bot.say("Oops it broke :(")
 
-        if 'error' in results:
-            await self.bot.say("Couldn't search, something went wrong")
-            return
+    @_d.command(pass_context=True, name='chars')
+    async def _chars(self, context, q: str, c: str):
+        url = self.baseUrl + '/User/GetMembershipsById/' + str(self.users[q]) + '/-1/'
+        async with aiohttp.ClientSession(headers=self.header) as session:
+            async with session.get(url) as resp:
+                results = await resp.json()
+                print(results)
+                id = results['Response']['destinyMemberships'][0]['membershipId']
+                type = results['Response']['destinyMemberships'][0]['membershipType']
+                url = self.baseUrl + '/Destiny2/' + str(type) + '/Profile/' + str(id) + "/?components=200"
+
+        async with aiohttp.ClientSession(headers=self.header) as session:
+            async with session.get(url) as resp:
+                results = await resp.json()
+                print(results)
+                output = ""
+                for character in results["Response"]["characters"]["data"]:
+                    print("*****************************************************")
+                    print(character)
+                    output += "**Character**\n"
+                    output += "Power: " + \
+                              str(results["Response"]["characters"]["data"][str(character)]['light']) + "\n"
+                    output += "Percent to next level: " + \
+                              str(results["Response"]["characters"]["data"][str(character)]['percentToNextLevel']) \
+                              + "\n"
+                    output += "Class type: " + self.classes[str(results["Response"]["characters"]["data"][str(character)]['classType'])] + "\n\n"
         try:
             await self.bot.say(str(output))
         except discord.errors.HTTPException:
