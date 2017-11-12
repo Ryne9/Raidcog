@@ -80,10 +80,10 @@ class destinycog:
 
     @_d.command(pass_context=True, name='users')
     async def _users(self, context, q: str):
-        url = self.baseUrl + '?q=' + q
+        url = self.baseUrl + '/User/SearchUsers/?q=' + q
         async with aiohttp.ClientSession(headers=self.header) as session:
             async with session.get(url) as resp:
-                results = await resp.text()
+                results = await resp.json()
 
         if 'error' in results:
             await self.bot.say("Couldn't search, something went wrong")
