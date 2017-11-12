@@ -55,7 +55,35 @@ class destinycog:
             await self.bot.say("404 Error :(")
 
     @_d.command(pass_context=True, name='users')
-    async def _users(self, context, q: str, b):
+    async def _users(self, context, q: str):
+        url = self.baseUrl + '/User/SearchUsers/?q=' + q
+        async with aiohttp.ClientSession(headers=self.header) as session:
+            async with session.get(url) as resp:
+                results = await resp.json()
+                print(results)
+                output = ""
+                for user in results['Response']:
+                    if 'psnDisplayName' in user.keys():
+                        psn = "\n - psn: " + user['psnDisplayName']
+                    else:
+                        psn = ""
+
+                    if 'blizzardDisplayName' in user.keys():
+                        bnet = "\n - bnet: " + user['blizzardDisplayName']
+                    else:
+                        bnet = ""
+                    output += "**" + user['displayName'] + "**" + bnet + psn + "\n"
+
+        if 'error' in results:
+            await self.bot.say("Couldn't search, something went wrong")
+            return
+        try:
+            await self.bot.say(str(output))
+        except discord.errors.HTTPException:
+            await self.bot.say("Oops it broke :(")
+
+    @_d.command(pass_context=True, name='usersb')
+    async def _usersb(self, context, q: str, b):
         url = self.baseUrl + '/User/SearchUsers/?q=' + q
         async with aiohttp.ClientSession(headers=self.header) as session:
             async with session.get(url) as resp:
