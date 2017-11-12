@@ -34,7 +34,7 @@ class raidcog:
             description = '**Commands**\n\n'
             description += '``{0}raid create``: Creates a new raid.\n'
             description += '``{0}raid delete``: Deletes a raid you created.\n'
-            description += '``{0}raid join [#]``: Joins a raid.\n'
+            description += '``{0}raid join #``: Joins a raid.\n'
             description += '``{0}raid leave``: Leaves a raid.\n'
             description += '``{0}raid list``: Displays all raids, active and upcoming.\n'
 
