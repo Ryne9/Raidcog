@@ -82,7 +82,7 @@ class gamecog:
             b = json.load(bcards)
         with open('data/gamecog/whitecards.json') as wcards:
             w = json.load(wcards)
-        await self.bot.say("Your Superfight cards:\nWhite Card: " + w[random.randint(0, len(w) - 1)] + "Black Card: " +
+        await self.bot.say("Your Superfight cards:\nWhite Card: " + w[random.randint(0, len(w) - 1)] + " Black Card: " +
                            b[random.randint(0, len(b) - 1)])
 
     @_game.command(pass_context=True, name="generate")
