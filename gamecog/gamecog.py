@@ -29,18 +29,20 @@ class gamecog:
     """Weird experimental stuff"""
     def __init__(self, bot):
         self.bot = bot
+        self.tileSize = 64
 
-        self.x = 320/64
-        self.y = 320/64
+        self.x = 320/self.tileSize
+        self.y = 320/self.tileSize
 
-        box = (self.x * 64, self.y * 64, self.x * 64 + 320, self.y * 64 + 320)
+        box = (self.x * self.tileSize, self.y * self.tileSize,
+               self.x * self.tileSize + 320, self.y * self.tileSize + 320)
         self.cropped = image.crop(box)
-        self.cropped = self.cropped.resize((160, 160), Image.ANTIALIAS)
+        # self.cropped = self.cropped.resize((160, 160), Image.ANTIALIAS)
         self.cropped.save("data/gamecog/croppedlevel.png", quality=60)
 
         box = (64 * 3, 0, 64 * 4, 64)
         self.croppedp = pimage.crop(box)
-        self.croppedp = self.cropped.resize((32, 32), Image.ANTIALIAS)
+        # self.croppedp = self.cropped.resize((32, 32), Image.ANTIALIAS)
         self.croppedp.save("data/gamecog/croppedplayer.png", quality=60)
 
         self.compost()
@@ -52,7 +54,8 @@ class gamecog:
         self.croppedp.save("data/gamecog/croppedplayer.png", quality=30)
 
     def crop_land(self):
-        box = (self.x * 64, self.y * 64, self.x * 64 + 320, self.y * 64 + 320)
+        box = (self.x * self.tileSize, self.y * self.tileSize,
+               self.x * self.tileSize + 320, self.y * self.tileSize + 320)
         self.cropped = image.crop(box)
         # self.cropped = self.cropped.resize((160, 160), Image.ANTIALIAS)
         self.cropped.save("data/gamecog/croppedlevel.png", quality=30)
@@ -71,19 +74,13 @@ class gamecog:
             title = '**Thunderdoge Game**\n'
             description = '**Commands**\n\n'
             description += '``{0}game start``: Boots up one of them vidya games.\n'
+            description += '``{0}game generate #``: Sends an image generated from the tilesheet with limited tiles.\n'
+            description += '``{0}game generate_yolo #``: Sends an image generated from the ' \
+                           'tilesheet with random tiles.\n'
 
             em = discord.Embed(title=title, description=description.format(prefix), color=discord.Color.blue())
             em.set_footer(text='This cog was made by Arrow.')
             await self.bot.say(embed=em)
-
-    @_game.command(pass_context=True, name="superfight_card")
-    async def _superfight(self, context):
-        with open('data/gamecog/blackcards.json') as bcards:
-            b = json.load(bcards)
-        with open('data/gamecog/whitecards.json') as wcards:
-            w = json.load(wcards)
-        await self.bot.say("Your Superfight cards:\nWhite Card: " + w[random.randint(0, len(w) - 1)] + " Black Card: " +
-                           b[random.randint(0, len(b) - 1)])
 
     @_game.command(pass_context=True, name="generate")
     async def _generate(self, context, size:int):
@@ -98,7 +95,8 @@ class gamecog:
                 for y in range(0, size):
                     randTile = random.randint(0, 11)
                     print(pos[randTile])
-                    box = (pos[randTile]["x"] * 32, pos[randTile]["y"] * 32, 32 + pos[randTile]["x"] * 32, 32 + pos[randTile]["y"] * 32)
+                    box = (pos[randTile]["x"] * 32, pos[randTile]["y"] * 32,
+                           32 + pos[randTile]["x"] * 32, 32 + pos[randTile]["y"] * 32)
                     image = sheet.crop(box)
                     pastePosition = (x * 32, y * 32)
                     output.paste(image, pastePosition)

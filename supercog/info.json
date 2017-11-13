@@ -1,0 +1,10 @@
+{
+    "AUTHOR" : "Arrow",
+    "INSTALL_MSG" : "Superhero card game installed!",
+    "NAME" : "supercog",
+    "SHORT" : "Play a superhero card game with in your discord!",
+    "DESCRIPTION" : "Deals cards to each individual player that have joined the game, it's a fun party game!",
+    "TAGS" : ["superhero", "game"],
+    "REQUIREMENTS" : [],
+    "HIDDEN" : false
+}
