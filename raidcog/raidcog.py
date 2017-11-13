@@ -76,7 +76,7 @@ class raidcog:
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
             for raid in data:
-                if raid["id"] == id:
+                if raid["id"] == str(id):
                     for member in raid['members']:
                         user = self.get_user(member['id'])
                         await self.bot.send_message(user, "Raid reminder: " + raid['title'] + " starts soon!")
