@@ -84,7 +84,7 @@ class gamecog:
             pos = []
             for item in data:
                 print(item)
-                pos.append(item)
+                pos.append(data[item])
             for x in range(0, size - 1):
                 for y in range(0, size -1):
                     randTile = random.randint(0, 11)
