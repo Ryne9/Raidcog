@@ -77,16 +77,17 @@ class gamecog:
 
     @_game.command(pass_context=True, name="generate")
     async def _generate(self, context, size:int):
-        pos = json.load("tileset.json")
-        output = Image.new(mode="RGB", size=(size * 32, size * 32))
-        for x in range(0, size - 1):
-            for y in range(0, size -1):
-                randTile = random.random.range(0, 11)
-                box = (pos[randTile]["x"] * 32, pos[randTile]["y"] * 32, 32 + pos[randTile]["x"] * 32, 32 + pos[randTile]["y"] * 32)
-                image = sheet.crop(box)
-                pastePosition = (x * 32, y * 32)
-                output.paste(image, pastePosition)
-        output.save("data/gamecog/output.png", quality=30)
+        with open('data/gamecog/tileset.json') as data_file:
+            pos = json.load(data_file)
+            output = Image.new(mode="RGB", size=(size * 32, size * 32))
+            for x in range(0, size - 1):
+                for y in range(0, size -1):
+                    randTile = random.random.range(0, 11)
+                    box = (pos[randTile]["x"] * 32, pos[randTile]["y"] * 32, 32 + pos[randTile]["x"] * 32, 32 + pos[randTile]["y"] * 32)
+                    image = sheet.crop(box)
+                    pastePosition = (x * 32, y * 32)
+                    output.paste(image, pastePosition)
+            output.save("data/gamecog/output.png", quality=30)
         await self.bot.send_file(context.message.channel, 'data/gamecog/output.png')
 
     @_game.command(pass_context=True, name="start")
