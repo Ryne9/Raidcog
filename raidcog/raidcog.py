@@ -72,7 +72,7 @@ class raidcog:
             await self.bot.say(embed=em)
 
     @_raid.command(pass_context=True, name='tell')
-    async def _tell(self, context, id):
+    async def _tell(self, id):
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
             for raid in data:
@@ -80,6 +80,8 @@ class raidcog:
                     for member in raid['members']:
                         user = self.get_user(member['id'])
                         await self.bot.send_message(user, "Raid reminder: " + raid['title'] + " starts soon!")
+                        await self.bot.say("Mentioned users")
+                        return
             await self.bot.say("Raid wasn't found :(")
 
 
