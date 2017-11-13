@@ -103,7 +103,7 @@ class gamecog:
             for y in range(0, size):
                 tx = random.randint(0, 40)
                 ty = random.randint(2, 13)
-                box = (tx * 32, tx * 32, 32 + tx * 32, 32 + ty * 32)
+                box = (tx * 32, ty * 32, 32 + tx * 32, 32 + ty * 32)
                 image = sheet.crop(box)
                 pastePosition = (x * 32, y * 32)
                 output.paste(image, pastePosition)
