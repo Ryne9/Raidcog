@@ -49,7 +49,7 @@ class supercog:
             "whiteCard": "",
             "blackCard": ""
         }]
-        with open('data/supercog/game.json') as tonuke:
+        with open('data/supercog/game.json', "w") as tonuke:
             json.dump(newGame, tonuke)
         await self.bot.say("You have started a new Superhero game! Have others join the game "
                            "with {0}super join\n").format(context.prefix)
@@ -74,7 +74,7 @@ class supercog:
 
     @_super.command(pass_context=True, name="deal")
     async def _deal(self, context):
-        with open('data/supercog/players.json') as players_file:
+        with open('data/supercog/players.json', "rw") as players_file:
             players = json.load(players_file)
             for player in players:
                 dealtWhite = {
