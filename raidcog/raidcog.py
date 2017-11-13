@@ -82,6 +82,7 @@ class raidcog:
                         await self.bot.send_message(user, "Raid reminder: " + raid['title'] + " starts soon!")
             await self.bot.say("Raid wasn't found :(")
 
+
     @_raid.command(pass_context=True, name='create')
     async def _create(self, context, title, inDate, inTime, timezone: str):
         with open('data/raidcog/raids.json') as data_file:
