@@ -83,10 +83,12 @@ class gamecog:
             output = Image.new(mode="RGB", size=(size * 32, size * 32))
             pos = []
             for item in data:
-                pos.append(dict(item))
+                print(item)
+                pos.append(item)
             for x in range(0, size - 1):
                 for y in range(0, size -1):
                     randTile = random.randint(0, 11)
+                    print(pos[randTile])
                     box = (pos[randTile]["x"] * 32, pos[randTile]["y"] * 32, 32 + pos[randTile]["x"] * 32, 32 + pos[randTile]["y"] * 32)
                     image = sheet.crop(box)
                     pastePosition = (x * 32, y * 32)
