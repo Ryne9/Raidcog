@@ -76,6 +76,15 @@ class gamecog:
             em.set_footer(text='This cog was made by Arrow.')
             await self.bot.say(embed=em)
 
+    @_game.command(pass_context=True, name="superfight_card")
+    async def _superfight(self, context):
+        with open('data/gamecog/blackcards.json') as bcards:
+            b = json.load(bcards)
+        with open('data/gamecog/whitecards.json') as wcards:
+            w = json.load(bcards)
+        await self.bot.say("Your Superfight cards:\nWhite Card: " + w[random.randint(0, len(w) - 1)] + "Black Card: " +
+                           b[random.randint(0, len(b) - 1)])
+
     @_game.command(pass_context=True, name="generate")
     async def _generate(self, context, size:int):
         with open('data/gamecog/tileset.json') as data_file:
@@ -85,8 +94,8 @@ class gamecog:
             for item in data:
                 print(item)
                 pos.append(data[item])
-            for x in range(0, size - 1):
-                for y in range(0, size -1):
+            for x in range(0, size):
+                for y in range(0, size):
                     randTile = random.randint(0, 11)
                     print(pos[randTile])
                     box = (pos[randTile]["x"] * 32, pos[randTile]["y"] * 32, 32 + pos[randTile]["x"] * 32, 32 + pos[randTile]["y"] * 32)
