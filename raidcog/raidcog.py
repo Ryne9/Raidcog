@@ -72,11 +72,11 @@ class raidcog:
             await self.bot.say(embed=em)
 
     @_raid.command(pass_context=True, name='tell')
-    async def _tell(self, id):
+    async def _tell(self, id: int):
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
             for raid in data:
-                if raid["id"] == str(id):
+                if raid['id'] == id:
                     for member in raid['members']:
                         user = self.get_user(member['id'])
                         await self.bot.send_message(user, "Raid reminder: " + raid['title'] + " starts soon!")
