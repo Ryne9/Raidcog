@@ -76,23 +76,25 @@ class supercog:
         with open('data/supercog/players.json', "r+") as players_file:
             players = json.load(players_file)
             for player in players:
-                dealtWhite = {
+                dealtWhite = [
                     self.generate_card("w"),
                     self.generate_card("w"),
                     self.generate_card("w")
-                }
-                dealtBlack = {
+                ]
+                dealtBlack = [
                     self.generate_card("b"),
                     self.generate_card("b"),
                     self.generate_card("b")
-                }
+                ]
                 player['dealtWhite'] = dealtWhite
                 player['dealtBlack'] = dealtBlack
                 user = discord.User(id=str(player["player"]))
+                wlist = ""
+                blist = ""
                 for card in dealtWhite:
-                    wlist = card + " "
+                    wlist += card + "\n"
                 for card in dealtBlack:
-                    blist = card + " "
+                    blist += card + "\n"
                 await self.bot.send_message(user, "Your white cards:\n" + wlist + "\n"
                                             "Your black cards:\n" + blist)
             json.dump(players, players_file)
