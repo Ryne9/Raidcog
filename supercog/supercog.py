@@ -17,7 +17,10 @@ class supercog:
             prefix = context.prefix
             title = '**Superhero Card Game**\n'
             description = '**Commands**\n\n'
-            description += '``{0}super deal``: Deals a set of black/white superhero cards!\n'
+            description += '``{0}super deal``: Deals 3 of each superhero cards to each player that has joined!\n'
+            description += '``{0}super generate``: Creates a random white and black card pairing!\n'
+            description += '``{0}super join``: Joins the game in progress!\n'
+            description += '``{0}super newgame``: Creates a new game and adds you as a player!\n'
 
             em = discord.Embed(title=title, description=description.format(prefix), color=discord.Color.blue())
             em.set_footer(text='This cog was made by Arrow.')
