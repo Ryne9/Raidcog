@@ -96,6 +96,20 @@ class gamecog:
             output.save("data/gamecog/output.png", quality=30)
         await self.bot.send_file(context.message.channel, 'data/gamecog/output.png')
 
+    @_game.command(pass_context=True, name="generate_yolo")
+    async def _generate_yolo(self, context, size:int):
+        output = Image.new(mode="RGB", size=(size * 32, size * 32))
+        for x in range(0, size):
+            for y in range(0, size):
+                tx = random.randint(0, 40)
+                ty = random.randint(2, 13)
+                box = (tx * 32, tx * 32, 32 + tx * 32, 32 + ty * 32)
+                image = sheet.crop(box)
+                pastePosition = (x * 32, y * 32)
+                output.paste(image, pastePosition)
+        output.save("data/gamecog/output.png", quality=30)
+        await self.bot.send_file(context.message.channel, 'data/gamecog/output.png')
+
     @_game.command(pass_context=True, name="start")
     async def _start(self, context, timeout: int=30):
         return await self.game(context, timeout)
