@@ -79,11 +79,19 @@ class raidcog:
             for raid in data:
                 print("Checking raid: " + str(raid) + " " + str(raid["id"]) + "\n")
                 if raid['id'] == id:
+                    inRaid = False
+                    for member in raid["members"]:
+                        if member['id'] == context.message.author.id:
+                            inRaid = True
+                    if not inRaid:
+                        await self.bot.say("You aren't in that raid, you potato.")
+                        return
                     for member in raid['members']:
                         user = self.get_user(member['id'])
                         await self.bot.send_message(user, "Raid reminder: " + raid['title'] + " starts soon!")
-                        await self.bot.say("Mentioned users")
-                        return
+                    await self.bot.say("ShibeBot has tracked down all members of the raid :) :))))))))\n\n\n\n\n\n:"
+                                       "))))))))))))))))))))))))))))))))")
+                    return
             await self.bot.say("Raid wasn't found :(")
 
 
