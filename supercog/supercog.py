@@ -69,8 +69,7 @@ class supercog:
             }
             players.append(newPlayer)
             json.dump(players, players_file)
-        await self.bot.say("You have started a new Superhero game! Have others join the game "
-                           "with {0}super join\n".format(context.prefix))
+        await self.bot.say("You have started a new Superhero game! Have others join the game!\n")
 
     @_super.command(pass_context=True, name="deal")
     async def _deal(self, context):
