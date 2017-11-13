@@ -14,7 +14,7 @@ class clancog:
         #Your code will go here
         await self.bot.say("https://www.bungie.net/en/ClanV2/Chat?groupId=2762856")
 
-    @commands.command()
+    @commands.command(pass_context=True)
     async def squad(self, context):
         """Thunderdoges D2 clan banner!"""
 
