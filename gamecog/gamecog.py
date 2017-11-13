@@ -79,8 +79,11 @@ class gamecog:
     @_game.command(pass_context=True, name="generate")
     async def _generate(self, context, size:int):
         with open('data/gamecog/tileset.json') as data_file:
-            pos = json.load(data_file)
+            data = json.load(data_file)
             output = Image.new(mode="RGB", size=(size * 32, size * 32))
+            pos = []
+            for item in data:
+                pos.append(item)
             for x in range(0, size - 1):
                 for y in range(0, size -1):
                     randTile = random.randint(0, 11)
