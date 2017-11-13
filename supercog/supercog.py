@@ -56,7 +56,7 @@ class supercog:
 
     @_super.command(pass_context=True, name="join")
     async def _join(self, context):
-        with open('data/supercog/players.json', "r+") as players_file:
+        with open('data/supercog/players.json', "r") as players_file:
             players = json.load(players_file)
             for player in players:
                 if player["player"] == context.message.author.id:
@@ -68,12 +68,13 @@ class supercog:
                 "blackCard": ""
             }
             players.append(newPlayer)
+        with open('data/supercog/players.json', 'w') as players_file:
             json.dump(players, players_file)
-            await self.bot.say("You have joined the game!")
+        await self.bot.say("You have joined the game!")
 
     @_super.command(pass_context=True, name="deal")
     async def _deal(self, context):
-        with open('data/supercog/players.json', "r+") as players_file:
+        with open('data/supercog/players.json', "r") as players_file:
             players = json.load(players_file)
             for player in players:
                 dealtWhite = [
@@ -97,7 +98,9 @@ class supercog:
                     blist += card + "\n"
                 await self.bot.send_message(user, "Your white cards:\n" + wlist + "\n"
                                             "Your black cards:\n" + blist)
+        with open("data/supercog/players.json", "w") as players_file:
             json.dump(players, players_file)
+        await self.bot.say("All cards sent out.")
 
 def check_files():
     f = "data/supercog/players.json"
