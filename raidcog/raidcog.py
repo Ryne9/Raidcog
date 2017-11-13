@@ -75,7 +75,9 @@ class raidcog:
     async def _tell(self, id: int):
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
+            print("This is the id: " + str(id) + "\n")
             for raid in data:
+                print("Checking raid: " + str(raid) + " " + raid["id"] + "\n")
                 if raid['id'] == id:
                     for member in raid['members']:
                         user = self.get_user(member['id'])
