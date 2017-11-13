@@ -21,6 +21,7 @@ class supercog:
             description += '``{0}super generate``: Creates a random white and black card pairing!\n'
             description += '``{0}super join``: Joins the game in progress!\n'
             description += '``{0}super newgame``: Creates a new game and adds you as a player!\n'
+            description += '``{0}super rules``: Says the rules!\n'
 
             em = discord.Embed(title=title, description=description.format(prefix), color=discord.Color.blue())
             em.set_footer(text='This cog was made by Arrow.')
@@ -44,6 +45,20 @@ class supercog:
             w = json.load(wcards)
         await self.bot.say("Your Superfight cards:\nWhite Card: " + w[random.randint(0, len(w) - 1)] + " Black Card: " +
                            b[random.randint(0, len(b) - 1)])
+
+    @_super.command(pass_context=True, name="rules")
+    async def _rules(self, context):
+        title = '**Superhero Card Game**\n'
+        description = '**Rules**\n\n'
+        description += 'Each player chooses one white card and one black card from their hand to create a fighter.\n'
+        description += 'Next, both players {0}super reveal to reveal their fighters.\n'
+        description += 'Only two should reveal per round\n'
+        description += 'Both players then have a random black card assigned to their fighter with {0}super modify\n'
+        description += 'Both players argue and plead their cases about why their fighters would win the fight.'
+
+        em = discord.Embed(title=title, description=description.format(context.prefix), color=discord.Color.blue())
+        em.set_footer(text='pls dont ruin friendships')
+        await self.bot.say(embed=em)
 
     @_super.command(pass_context=True, name="newgame")
     async def _newgame(self, context):
