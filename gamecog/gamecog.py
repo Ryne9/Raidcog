@@ -83,7 +83,7 @@ class gamecog:
             output = Image.new(mode="RGB", size=(size * 32, size * 32))
             pos = []
             for item in data:
-                pos.append(item)
+                pos.append(dict(item))
             for x in range(0, size - 1):
                 for y in range(0, size -1):
                     randTile = random.randint(0, 11)
