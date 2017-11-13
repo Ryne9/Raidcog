@@ -9,6 +9,7 @@ pimage = Image.open("data/gamecog/player.png")
 sheet = Image.open("data/gamecog/tilesheet.png")
 cropped = ""
 croppedp = ""
+random.seed()
 
 chars = {
     "right": "➡",
@@ -82,7 +83,7 @@ class gamecog:
             output = Image.new(mode="RGB", size=(size * 32, size * 32))
             for x in range(0, size - 1):
                 for y in range(0, size -1):
-                    randTile = random.random.randint(0, 11)
+                    randTile = random.randint(0, 11)
                     box = (pos[randTile]["x"] * 32, pos[randTile]["y"] * 32, 32 + pos[randTile]["x"] * 32, 32 + pos[randTile]["y"] * 32)
                     image = sheet.crop(box)
                     pastePosition = (x * 32, y * 32)
