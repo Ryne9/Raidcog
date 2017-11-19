@@ -13,8 +13,8 @@ class raidcog:
 
     def __init__(self, bot):
         self.bot = bot
-        self.timer = 20
-        self.channel = ""
+        # self.timer = 20
+        # self.channel = ""
         self.fmt = "%b %d, %Y %I:%M%p"
         self.timezones = {
             "EST": timezone('US/Eastern'),
@@ -191,32 +191,32 @@ class raidcog:
         self.save_data(data)
         await self.bot.say("Cleared all raids.")
 
-    @_raid.command(pass_context=True, name='stopspamming')
-    async def _stopspamming(self, context):
-        self.channel = ""
-        self.notification_task.cancel()
-        await self.bot.say("ok sry")
-
-    @_raid.command(pass_context=True, name='spamhere')
-    async def _spamhere(self, context, timer):
-        print("Bloop boop " + str(context.message.channel.id))
-        self.timer = timer
-        self.channel = str(context.message.channel.id)
-        self.notification_task = self.bot.loop.create_task(self.spam())
-
-    async def _send_message(self, message):
-        em = discord.Embed(description=message, color=discord.Color.green())
-        print("should've spammed x 2")
-        await self.bot.send_message(discord.Object(id=self.channel), embed=em)
-
-    async def spam(self):
-        while 'raidcog' in self.bot.cogs:
-            print("should've spammed")
-            await self._send_message("raidbot spam destroy")
-            await asyncio.sleep(int(self.timer))
-
-    def __unload(self):
-        self.notification_task.cancel()
+    # @_raid.command(pass_context=True, name='stopspamming')
+    # async def _stopspamming(self, context):
+    #     self.channel = ""
+    #     self.notification_task.cancel()
+    #     await self.bot.say("ok sry")
+    #
+    # @_raid.command(pass_context=True, name='spamhere')
+    # async def _spamhere(self, context, timer):
+    #     print("Bloop boop " + str(context.message.channel.id))
+    #     self.timer = timer
+    #     self.channel = str(context.message.channel.id)
+    #     self.notification_task = self.bot.loop.create_task(self.spam())
+    #
+    # async def _send_message(self, message):
+    #     em = discord.Embed(description=message, color=discord.Color.green())
+    #     print("should've spammed x 2")
+    #     await self.bot.send_message(discord.Object(id=self.channel), embed=em)
+    #
+    # async def spam(self):
+    #     while 'raidcog' in self.bot.cogs:
+    #         print("should've spammed")
+    #         await self._send_message("raidbot spam destroy")
+    #         await asyncio.sleep(int(self.timer))
+    #
+    # def __unload(self):
+    #     self.notification_task.cancel()
 
 def check_files():
     f = "data/raidcog/raids.json"
