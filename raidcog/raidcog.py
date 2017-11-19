@@ -13,7 +13,6 @@ class raidcog:
 
     def __init__(self, bot):
         self.bot = bot
-        self.notification_task = bot.loop.create_task(self.spam())
         self.channel = ""
         self.fmt = "%b %d, %Y %I:%M%p"
         self.timezones = {
@@ -22,7 +21,6 @@ class raidcog:
             "PST": timezone('US/Pacific-New'),
             "P": timezone('US/Pacific-New')
         }
-        self.completion_task = bot.loop.create_task(self.spam())
 
     def save_data(self, data):
         with open('data/raidcog/raids.json', 'w') as outfile:
@@ -201,6 +199,7 @@ class raidcog:
     async def _spamhere(self, context):
         print("Bloop boop " + str(context.message.channel.id))
         self.channel = str(context.message.channel.id)
+        self.notification_task = self.bot.loop.create_task(self.spam())
 
     async def _send_message(self, message):
         em = discord.Embed(description=message, color=discord.Color.green())
