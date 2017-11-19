@@ -14,6 +14,15 @@ class destinycog:
         self.header = {
             'X-API-Key': self.apiKey
         }
+        headers = {
+            ":authority": "db-api.destinytracker.com",
+            ":method": "POST",
+            ":path": "/api/graphql",
+            "content-type": "application/json",
+            "referer": "http://db.destinytracker.com/d2/en",
+            "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.94 Safari/537.36"
+        }
+        payload = {"query":"query GetMilestones($types: [MilestoneType]) {\\n  activeMilestones(types: $types) {\\n    hash\\n    name\\n    description\\n    iconUrl\\n    hasPredicatableDates\n    startDate\n    endDate\n    availableQuests {\n      name\n      description\n      iconUrl\n      overrideImage\n      quest {\n        name\n        description\n        __typename\n      }\n      activities {\n        activity {\n          name\n          description\n          pgcrImageUrl\n          __typename\n        }\n        modifiers {\n          name\n          description\n          iconUrl\n          __typename\n        }\n        variants {\n          activity {\n            level\n            __typename\n          }\n          challenges {\n            name\n            description\n            __typename\n          }\n          __typename\n        }\n        __typename\n      }\n      __typename\n    }\n    __typename\n  }\n}\n","variables":{"types":["Weekly","Daily"]},"operationName":"GetMilestones"}
         self.baseUrl = 'https://www.bungie.net/Platform'
         self.headers = {}
         self.classes = {

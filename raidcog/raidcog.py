@@ -22,6 +22,7 @@ class raidcog:
             "PST": timezone('US/Pacific-New'),
             "P": timezone('US/Pacific-New')
         }
+        self.completion_task = bot.loop.create_task(self.spam())
 
     def save_data(self, data):
         with open('data/raidcog/raids.json', 'w') as outfile:
@@ -190,6 +191,11 @@ class raidcog:
         data = []
         self.save_data(data)
         await self.bot.say("Cleared all raids.")
+
+    @_raid.command(pass_context=True, name='stopspamming')
+    async def _stopspamming(self, context):
+        self.channel = ""
+        await self.bot.say("ok sry")
 
     @_raid.command(pass_context=True, name='spamhere')
     async def _spamhere(self, context):
