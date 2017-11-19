@@ -199,6 +199,7 @@ class raidcog:
 
     @_raid.command(pass_context=True, name='spamhere')
     async def _spamhere(self, context):
+        print("Bloop boop " + str(context.message.channel))
         self.channel = context.message.channel
 
     async def _send_message(self, channel, message):
