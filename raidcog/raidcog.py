@@ -199,8 +199,8 @@ class raidcog:
 
     @_raid.command(pass_context=True, name='spamhere')
     async def _spamhere(self, context):
-        print("Bloop boop " + str(context.message.channel))
-        self.channel = context.message.channel
+        print("Bloop boop " + str(context.message.channel.id))
+        self.channel = context.message.channel.id
 
     async def _send_message(self, channel, message):
         em = discord.Embed(description=message, color=discord.Color.green())
@@ -208,7 +208,7 @@ class raidcog:
 
     async def spam(self):
         while 'raidcog' in self.bot.cogs:
-            await self._send_message(self.channel, "raidbot spam destroy")
+            await self._send_message(discord.Object(id=str(self.channel)), "raidbot spam destroy")
             await asyncio.sleep(20)
 
     def __unload(self):
