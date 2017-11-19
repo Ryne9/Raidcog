@@ -213,7 +213,7 @@ class raidcog:
         while 'raidcog' in self.bot.cogs:
             print("should've spammed")
             await self._send_message("raidbot spam destroy")
-            await asyncio.sleep(self.timer)
+            await asyncio.sleep(int(self.timer))
 
     def __unload(self):
         self.notification_task.cancel()
