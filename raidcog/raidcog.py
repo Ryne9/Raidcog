@@ -13,6 +13,7 @@ class raidcog:
 
     def __init__(self, bot):
         self.bot = bot
+        self.timer = 20
         self.channel = ""
         self.fmt = "%b %d, %Y %I:%M%p"
         self.timezones = {
@@ -193,11 +194,13 @@ class raidcog:
     @_raid.command(pass_context=True, name='stopspamming')
     async def _stopspamming(self, context):
         self.channel = ""
+        self.notification_task.cancel()
         await self.bot.say("ok sry")
 
     @_raid.command(pass_context=True, name='spamhere')
-    async def _spamhere(self, context):
+    async def _spamhere(self, context, timer):
         print("Bloop boop " + str(context.message.channel.id))
+        self.timer = timer
         self.channel = str(context.message.channel.id)
         self.notification_task = self.bot.loop.create_task(self.spam())
 
@@ -210,7 +213,7 @@ class raidcog:
         while 'raidcog' in self.bot.cogs:
             print("should've spammed")
             await self._send_message("raidbot spam destroy")
-            await asyncio.sleep(20)
+            await asyncio.sleep(self.timer)
 
     def __unload(self):
         self.notification_task.cancel()
