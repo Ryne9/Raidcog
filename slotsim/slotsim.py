@@ -47,11 +47,6 @@ class slotsim:
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
-    async def clan(self):
-        """Thunderdoges D2 clan link!"""
-        await self.bot.say("https://www.bungie.net/en/ClanV2/Chat?groupId=2762856")
-
     def slot_machine_sim(self, bid, balance):
         default_reel = deque(SMReel)
         reels = []
