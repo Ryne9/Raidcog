@@ -7,6 +7,7 @@ from pytz import timezone
 from cogs.utils import checks
 import pytz
 from discord.ext import commands
+from __main__ import settings
 
 class raidcog:
     """Custom D2 raid cog for Thunderdoges"""
