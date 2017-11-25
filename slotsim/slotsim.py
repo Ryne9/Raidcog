@@ -100,14 +100,14 @@ class slotsim:
             return now
 
     @commands.command()
-    async def slotsim(self, balance, bidDiv, total):
+    async def slotsim(self, balance: int, biddiv: int, total: int):
         counter = 0
         totalTimesGoneBroke = 0
         wins = 0
         losses = 0
 
         while counter < total:
-            bid = balance / bidDiv
+            bid = balance / biddiv
             prevBalance = balance
             balance = self.slot_machine_sim(bid, balance)
             if balance < 0:
