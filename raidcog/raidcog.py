@@ -177,7 +177,8 @@ class raidcog:
             data = json.load(data_file)
             for raid in data:
                 if raid['id'] == id:
-                    if raid['members'][0]['id'] == context.message.author.id:
+                    if raid['members'][0][
+                        'id'] == context.message.author.id or settings.owner or _id in ctx.bot.settings.co_owners:
                         data.remove(raid)
                         self.save_data(data)
                         await self.bot.say("Removed the raid.")
