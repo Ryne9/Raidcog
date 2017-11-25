@@ -1,0 +1,10 @@
+{
+    "AUTHOR" : "Arrow",
+    "INSTALL_MSG" : "Slot simulation because gambling is bad.",
+    "NAME" : "slotsim",
+    "SHORT" : "Simulates the thunderdoge slots.",
+    "DESCRIPTION" : "Hopefully gives people more insight into how the slot machine works.",
+    "TAGS" : ["clan", "slots"],
+    "REQUIREMENTS" : [],
+    "HIDDEN" : false
+}
