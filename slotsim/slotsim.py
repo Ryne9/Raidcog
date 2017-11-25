@@ -118,8 +118,8 @@ class slotsim:
                 losses += 1
             counter += 1
 
-        await self.bot.say("Ending balance: " + balance + " and went broke: " + totalTimesGoneBroke + "times"
-                           + "\nWins: " + wins + " Losses: " + losses)
+        await self.bot.say("Ending balance: " + str(balance) + " and went broke: " + str(totalTimesGoneBroke) + "times"
+                           + "\nWins: " + str(wins) + " Losses: " + str(losses))
 
 def setup(bot):
     bot.add_cog(slotsim(bot))
