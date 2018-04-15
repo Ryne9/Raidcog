@@ -31,7 +31,7 @@ class stolenparrot:
 
         if reply is None:
             await self.bot.send_message(author_channel, "Okay, fine.")
-        elif reply.content is "stop":
+        elif reply.content == "stop":
             await self.bot.send_message(author_channel, " omg fine wtf")
         else:
             await self.bot.send_message(author_channel, " ur a prankst er :" + reply.content)
