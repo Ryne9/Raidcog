@@ -56,7 +56,7 @@ class raidcog:
                     for members in raid['members']:
                         role = ""
                         if 'role' in members.keys():
-                            role = members['role']
+                            role = "[{}]".format(members['role'])
                         if members['id'] == raid['members'][0]['id']:
                             description += " - " + members['name'] + " " + role + " (Raid Leader)\n"
                         else:
