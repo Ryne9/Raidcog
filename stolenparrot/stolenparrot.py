@@ -20,7 +20,7 @@ class stolenparrot:
         author = ctx.message.author
         await self.bot.send_message(author, "Please respond to this message")
 
-        reply = await self.bot.wait_for_message(author=author, timeout=30)
+        reply = await self.bot.wait_for_message(timeout=30, author=author)
 
         if reply is None:
             await self.bot.send_message(author,
