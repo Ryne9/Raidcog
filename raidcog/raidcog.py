@@ -14,15 +14,7 @@ class raidcog:
 
     def __init__(self, bot):
         self.bot = bot
-        # self.timer = 20
-        # self.channel = ""
         self.fmt = "%b %d, %Y %I:%M%p"
-        self.timezones = {
-            "EST": timezone('US/Eastern'),
-            "E": timezone('US/Eastern'),
-            "PST": timezone('US/Pacific-New'),
-            "P": timezone('US/Pacific-New')
-        }
 
     def save_data(self, data):
         with open('data/raidcog/raids.json', 'w') as outfile:
@@ -51,22 +43,22 @@ class raidcog:
             await self.bot.say(embed=em)
 
     @_raid.command(pass_context=True, name='list')
-    async def _list(self, context):
+    async def _list(self, context, filter: str):
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
             title = "Current raids:\n"
             description = ""
             for raid in data:
-                date = datetime.datetime.strptime(raid['date'], '%Y-%m-%d %H:%M:%S')
-                description += "__**" + raid['title'] + "**__ [" + str(raid['id']) + "]\n"
-                description += str(date.strftime(self.fmt)) + " " + raid['timezone'] + "\n"
-                for members in raid['members']:
-                    if members['id'] == raid['members'][0]['id']:
-                        description += " - " + members['name'] + " (Raid Leader)\n"
-                    else:
-                        description += " - " + members['name'] + "\n"
-                description += "\n"
-
+                if ((filter and filter in raid['title']) or not filter):
+                    date = datetime.datetime.strptime(raid['date'], '%Y-%m-%d %H:%M:%S')
+                    description += "__**" + raid['title'] + "**__ [" + str(raid['id']) + "]\n"
+                    description += str(date.strftime(self.fmt)) + " " + raid['timezone'] + "\n"
+                    for members in raid['members']:
+                        if members['id'] == raid['members'][0]['id']:
+                            description += " - " + members['name'] + " (Raid Leader)\n"
+                        else:
+                            description += " - " + members['name'] + "\n"
+                    description += "\n"
             em = discord.Embed(title=title, description=description, color=discord.Color.blue())
             em.set_footer(text='This was sent to ' + context.message.channel.name + " : " + str(context.message.channel.id))
 
@@ -178,8 +170,8 @@ class raidcog:
             data = json.load(data_file)
             for raid in data:
                 if raid['id'] == id:
-                    if raid['members'][0][
-                        'id'] == context.message.author.id or settings.owner or _id in ctx.bot.settings.co_owners:
+                    authorId = context.message.author.id
+                    if raid['members'][0]['id'] == authorId or settings.owner == authorId or authorId in ctx.bot.settings.co_owners:
                         data.remove(raid)
                         self.save_data(data)
                         await self.bot.say("Removed the raid.")
@@ -192,33 +184,6 @@ class raidcog:
         data = []
         self.save_data(data)
         await self.bot.say("Cleared all raids.")
-
-    # @_raid.command(pass_context=True, name='stopspamming')
-    # async def _stopspamming(self, context):
-    #     self.channel = ""
-    #     self.notification_task.cancel()
-    #     await self.bot.say("ok sry")
-    #
-    # @_raid.command(pass_context=True, name='spamhere')
-    # async def _spamhere(self, context, timer):
-    #     print("Bloop boop " + str(context.message.channel.id))
-    #     self.timer = timer
-    #     self.channel = str(context.message.channel.id)
-    #     self.notification_task = self.bot.loop.create_task(self.spam())
-    #
-    # async def _send_message(self, message):
-    #     em = discord.Embed(description=message, color=discord.Color.green())
-    #     print("should've spammed x 2")
-    #     await self.bot.send_message(discord.Object(id=self.channel), embed=em)
-    #
-    # async def spam(self):
-    #     while 'raidcog' in self.bot.cogs:
-    #         print("should've spammed")
-    #         await self._send_message("raidbot spam destroy")
-    #         await asyncio.sleep(int(self.timer))
-    #
-    # def __unload(self):
-    #     self.notification_task.cancel()
 
 def check_files():
     f = "data/raidcog/raids.json"
