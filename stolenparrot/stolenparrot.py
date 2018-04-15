@@ -17,6 +17,10 @@ class stolenparrot:
     @commands.command(name="stolenparrot", pass_context=True)
     async def stolenparrot(self,ctx):
         """ask question , regurgitate answer """
+        author_channel = ctx.message.channel
+
+        await self.bot.send_message(author_channel, "hey u pls repond to me")
+
         await self.uwot(ctx)
 
     async def uwot(self, ctx):
@@ -27,13 +31,11 @@ class stolenparrot:
 
         if reply is None:
             await self.bot.send_message(author_channel, "Okay, fine.")
-        elif reply is "stop":
+        elif reply.content is "stop":
             await self.bot.send_message(author_channel, " omg fine wtf")
         else:
             await self.bot.send_message(author_channel, " ur a prankst er :" + reply.content)
-
-        await self.uwot(ctx)
-
+            await self.uwot(ctx)
 
 def setup(bot):
     bot.add_cog(stolenparrot(bot))
