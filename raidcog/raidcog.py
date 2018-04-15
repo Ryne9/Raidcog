@@ -49,7 +49,7 @@ class raidcog:
             title = "Current raids:\n"
             description = ""
             for raid in data:
-                if (filter and filter in raid['title']) or not filter:
+                if (filter and filter.upper() in raid['title'].upper()) or not filter:
                     date = datetime.datetime.strptime(raid['date'], '%Y-%m-%d %H:%M:%S')
                     description += "__**" + raid['title'] + "**__ [" + str(raid['id']) + "]\n"
                     description += str(date.strftime(self.fmt)) + " " + raid['timezone'] + "\n"
