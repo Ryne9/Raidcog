@@ -14,14 +14,14 @@ class stolenparrot:
     def __init__(self, bot):
         self.bot = bot
 
-
     @commands.command(name="stolenparrot", pass_context=True)
     async def stolenparrot(self,ctx):
         """ask question , regurgitate answer """
         author = ctx.message.author
-        await self.bot.send_message("Please respond to this message")
+        await self.bot.send_message(author, "Please respond to this message")
 
         reply = await self.bot.wait_for_message(author=author, timeout=30)
+
         if reply is None:
             await self.bot.send_message(author,
                                         "Okay, fine.")
