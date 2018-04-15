@@ -6,9 +6,9 @@ from cogs.utils.dataIO import dataIO
 from cogs.utils import checks
 from datetime import datetime
 
-path = 'data/parrot'
+path = 'data/stolenparrot'
 
-class parrot:
+class stolenparrot:
     """Waterfall Convo Repeat and Join"""
 
     def __init__(self, bot):
@@ -16,7 +16,7 @@ class parrot:
 
 
     @commands.command(name="stolenparrot", pass_context=True)
-    async def parrot(self,ctx):
+    async def stolenparrot(self,ctx):
         """ask question , regurgitate answer """
         author = ctx.message.author
         await self.bot.send_message("Please respond to this message")
@@ -29,4 +29,4 @@ class parrot:
             self.bot.send_message(author, ":", reply)
 
 def setup(bot):
-    bot.add_cog(parrot(bot))
+    bot.add_cog(stolenparrot(bot))
