@@ -20,14 +20,14 @@ class stolenparrot:
         author = ctx.message.author
         author_channel = ctx.message.channel
 
-        await self.bot.send_message("Please respond to this message")
+        await self.bot.send_message(author_channel, "Please respond to this message")
 
         reply = await self.bot.wait_for_message(timeout=30, author=author, channel=author_channel)
 
         if reply is None:
-            await self.bot.send_message("Okay, fine.")
+            await self.bot.send_message(author_channel, "Okay, fine.")
         else:
-            await self.bot.send_message(" ur a prankst er :" + reply.content)
+            await self.bot.send_message(author_channel, " ur a prankst er :" + reply.content)
 
 def setup(bot):
     bot.add_cog(stolenparrot(bot))
