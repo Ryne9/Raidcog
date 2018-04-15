@@ -43,34 +43,13 @@ class raidcog:
             await self.bot.say(embed=em)
 
     @_raid.command(pass_context=True, name='list')
-    async def _list(self, context):
+    async def _list(self, context, filter: str = None):
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
             title = "Current raids:\n"
             description = ""
             for raid in data:
-                date = datetime.datetime.strptime(raid['date'], '%Y-%m-%d %H:%M:%S')
-                description += "__**" + raid['title'] + "**__ [" + str(raid['id']) + "]\n"
-                description += str(date.strftime(self.fmt)) + " " + raid['timezone'] + "\n"
-                for members in raid['members']:
-                    if members['id'] == raid['members'][0]['id']:
-                        description += " - " + members['name'] + " (Raid Leader)\n"
-                    else:
-                        description += " - " + members['name'] + "\n"
-                description += "\n"
-        em = discord.Embed(title=title, description=description, color=discord.Color.blue())
-        em.set_footer(text='This was sent to ' + context.message.channel.name + " : " + str(context.message.channel.id))
-
-        await self.bot.say(embed=em)
-
-    @_raid.command(pass_context=True, name='list')
-    async def _list(self, context, filter: str):
-        with open('data/raidcog/raids.json') as data_file:
-            data = json.load(data_file)
-            title = "Current raids:\n"
-            description = ""
-            for raid in data:
-                if filter in raid['title']:
+                if (filter and filter in raid['title']) or not filter:
                     date = datetime.datetime.strptime(raid['date'], '%Y-%m-%d %H:%M:%S')
                     description += "__**" + raid['title'] + "**__ [" + str(raid['id']) + "]\n"
                     description += str(date.strftime(self.fmt)) + " " + raid['timezone'] + "\n"
