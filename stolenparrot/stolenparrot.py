@@ -27,7 +27,7 @@ class stolenparrot:
         if reply is None:
             await self.bot.send_message("Okay, fine.")
         else:
-            await self.bot.send_message("HAHAHA WHAT U SED :" + reply.content)
+            await self.bot.send_message(" ur a prankst er :" + reply.content)
 
 def setup(bot):
     bot.add_cog(stolenparrot(bot))
