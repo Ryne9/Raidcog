@@ -54,10 +54,13 @@ class raidcog:
                     description += "__**" + raid['title'] + "**__ [" + str(raid['id']) + "]\n"
                     description += str(date.strftime(self.fmt)) + " " + raid['timezone'] + "\n"
                     for members in raid['members']:
+                        role = ""
+                        if members['role']:
+                            role = members['role']
                         if members['id'] == raid['members'][0]['id']:
-                            description += " - " + members['name'] + " (Raid Leader)\n"
+                            description += " - " + members['name'] + " " + role + " (Raid Leader)\n"
                         else:
-                            description += " - " + members['name'] + "\n"
+                            description += " - " + members['name'] + " " + role + "\n"
                     description += "\n"
             em = discord.Embed(title=title, description=description, color=discord.Color.blue())
             em.set_footer(text='This was sent to ' + context.message.channel.name + " : " + str(context.message.channel.id))
@@ -130,7 +133,7 @@ class raidcog:
         await self.bot.say("Added your raid " + title + " for " + str(dt) + ".")
 
     @_raid.command(pass_context=True, name='join')
-    async def _join(self, context, id: int):
+    async def _join(self, context, id: int, role: str = None):
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
             for raid in data:
@@ -139,10 +142,17 @@ class raidcog:
                         if member['id'] == context.message.author.id:
                             await self.bot.say("You are already in this raid.")
                             return
-                    raid['members'].append({
-                        'id': context.message.author.id,
-                        'name': context.message.author.name
-                    })
+                    if role:
+                        raid['members'].append({
+                            'id': context.message.author.id,
+                            'name': context.message.author.name,
+                            'role': role
+                        })
+                    else:
+                        raid['members'].append({
+                            'id': context.message.author.id,
+                            'name': context.message.author.name
+                        })
                     self.save_data(data)
                     await self.bot.say("Joined raid " + raid['title'])
                     return
