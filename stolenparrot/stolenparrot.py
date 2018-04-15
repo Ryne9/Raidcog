@@ -18,9 +18,11 @@ class stolenparrot:
     async def stolenparrot(self,ctx):
         """ask question , regurgitate answer """
         author = ctx.message.author
+        author_channel = ctx.message.channel
+
         await self.bot.send_message(author, "Please respond to this message")
 
-        reply = await self.bot.wait_for_message(timeout=30, author=author)
+        reply = await self.bot.wait_for_message(timeout=30, author=author, channel=author_channel)
 
         if reply is None:
             await self.bot.send_message(author,
