@@ -55,7 +55,7 @@ class raidcog:
                     description += str(date.strftime(self.fmt)) + " " + raid['timezone'] + "\n"
                     for members in raid['members']:
                         role = ""
-                        if members['role']:
+                        if 'role' in members.keys():
                             role = members['role']
                         if members['id'] == raid['members'][0]['id']:
                             description += " - " + members['name'] + " " + role + " (Raid Leader)\n"
