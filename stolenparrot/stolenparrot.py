@@ -25,10 +25,9 @@ class stolenparrot:
         reply = await self.bot.wait_for_message(timeout=30, author=author, channel=author_channel)
 
         if reply is None:
-            await self.bot.send_message(author,
-                                        "Okay, fine.")
+            await self.bot.send_message(author, "Okay, fine.")
         else:
-            self.bot.send_message(author, ":", reply)
+            self.bot.send_message(author, ":" + reply)
 
 def setup(bot):
     bot.add_cog(stolenparrot(bot))
