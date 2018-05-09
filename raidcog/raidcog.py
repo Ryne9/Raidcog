@@ -150,7 +150,7 @@ class raidcog:
                                         "Check your date formatting, did you make a typo?")
 
         if len(date_bits) == 2:
-            date = date_bits + "/" + datetime.datetime.strftime(today, '%y')
+            date = in_date + "/" + datetime.datetime.strftime(today, '%y')
         else:
             date = date_bits
 
