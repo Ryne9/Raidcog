@@ -167,7 +167,7 @@ class raidcog:
     # ---Time processing and validation---
         in_time = time_msg.content
 
-        if ":" not in in_time and len(in_time) in [3, 4]:
+        if ":" not in in_time or len(in_time) in [3, 4]:
             await self.bot.send_message(author,
                                         "Check your time formatting.")
 
