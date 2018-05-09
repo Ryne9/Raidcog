@@ -167,9 +167,9 @@ class raidcog:
     # ---Time processing and validation---
         in_time = time_msg.content
 
-        if ":" not in in_time:
+        if ":" not in in_time and len(in_time) in [3, 4]:
             await self.bot.send_message(author,
-                                        "Check your time formatting, are you missing a `:`?")
+                                        "Check your time formatting.")
 
         # Assume time format is Hour:MinuteAM
         time_format = '%I:%M%p'
@@ -265,11 +265,11 @@ class raidcog:
 
     @_raid.command(pass_context=True, name='delete')
     async def _delete(self, context, id: int):
-        self._remove_raid(context, id)
+        await self._remove_raid(context, id)
 
     @_raid.command(pass_context=True, name='remove')
     async def _remove(self, context, id: int):
-        self._remove_raid(context, id)
+        await self._remove_raid(context, id)
 
     async def _remove_raid(self, context, id: int):
         with open('data/raidcog/raids.json') as data_file:
