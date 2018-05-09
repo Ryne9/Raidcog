@@ -192,7 +192,7 @@ class raidcog:
             self._failed_create(author)
             return
 
-        timezone = time_msg.content
+        timezone = timezone_msg.content
 
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
