@@ -31,12 +31,13 @@ class raidcog:
             title = '**Welcome to Thunderdoge\'s raid manager.**\n'
             description = '**Commands**\n\n'
             description += '``{0}raid create``: Creates a new raid.\n'
-            description += '``{0}raid delete``: Deletes a raid you created.\n'
+            description += '``{0}raid delete #``: Deletes a raid you created.\n'
+            description += '``{0}raid remove #``: Removes a raid you created.\n'
             description += '``{0}raid join #``: Joins a raid.\n'
-            description += '``{0}raid leave``: Leaves a raid.\n'
-            description += '``{0}raid list``: Displays all raids, active and upcoming.\n'
+            description += '``{0}raid leave #``: Leaves a raid.\n'
+            description += '``{0}raid list <filter>``: Displays all raids, optionally can filter by a keyword.\n'
+            description += '``{0}raid clear``: Removes all raids. (Admin only)\n'
             description += '\n'
-            description += 'Example: ``.raid create "THE RAID" 12/25/17 8:00pm PST``\n'
 
             em = discord.Embed(title=title, description=description.format(prefix), color=discord.Color.blue())
             em.set_footer(text='This cog was made by Arrow.')
@@ -85,32 +86,119 @@ class raidcog:
                     for member in raid['members']:
                         user = self.get_user(member['id'])
                         await self.bot.send_message(user, "Raid reminder: " + raid['title'] + " starts soon!")
-                    await self.bot.say("ShibeBot has tracked down all members of the raid :) :))))))))\n\n\n\n\n\n:"
-                                       "))))))))))))))))))))))))))))))))")
+                    await self.bot.say("ShibeBot has tracked down all members of the raid")
                     return
             await self.bot.say("Raid wasn't found :(")
 
+    async def _failed_create(self, author):
+        await self.bot.send_message(author,
+                                    "Okay, try again later.")
 
     @_raid.command(pass_context=True, name='create')
-    async def _create(self, context, title, inDate, inTime, timezone: str):
+    async def _create(self, context):
+        author = context.message.author
+        await self.bot.say("Check your DM to continue.")
+
+        dm = await self.bot.send_message(author, "Please respond to continue setting up the raid.\n"
+                                                 "What game is the raid for?\n"
+                                                 "Ex: `WoW` or `Destiny`")
+        game_msg = await self.bot.wait_for_message(channel=dm.channel,
+                                                   author=author, timeout=30)
+
+        if game_msg is None:
+            self._failed_create(author)
+            return
+
+        game = game_msg.content
+
+        dm = await self.bot.send_message(author,
+                                         "Give a raid description."
+                                         "Ex: `Prestige Argos` ; `WoW Mythics` ; `LFR`")
+
+        desc_msg = await self.bot.wait_for_message(channel=dm.channel,
+                                                   author=author, timeout=30)
+
+        if desc_msg is None:
+            self._failed_create(author)
+            return
+
+        desc = desc_msg.content
+
+        dm = await self.bot.send_message(author,
+                                         "Give a date for the raid. Follow the format: `MM/DD/YY` or 'MM/DD' "
+                                         "Ex: `12/25/17` or `12/25`")
+
+        date_msg = await self.bot.wait_for_message(channel=dm.channel,
+                                                  author=author, timeout=30)
+        if date_msg is None:
+            self._failed_create(author)
+            return
+
+    # ---Date processing, data validation---
+        in_date = date_msg.content
+        today = datetime.datetime.today()
+
+        if "/" not in in_date:
+            await self.bot.send_message(author,
+                                        "Check your date formatting, are you missing a `:`?")
+            return
+
+        date_bits = in_date.split('/')
+
+        if not (len(date_bits) == 2 or len(date_bits) == 3):
+            await self.bot.send_message(author,
+                                        "Check your date formatting, did you make a typo?")
+
+        if len(date_bits) == 2:
+            date = date_bits + "/" + datetime.datetime.strftime(today, '%y')
+        else:
+            date = date_bits
+
+        dm = await self.bot.send_message(author,
+                                         "Give a time for the raid. Follow the format: `H:MA` or `HA` "
+                                         "Ex: `8:00PM` or `11:00AM` or `8PM` or `11AM`")
+
+        time_msg = await self.bot.wait_for_message(channel=dm.channel,
+                                                   author=author, timeout=30)
+        if time_msg is None:
+            self._failed_create(author)
+            return
+
+    # ---Time processing and validation---
+        in_time = time_msg.content
+
+        if ":" not in in_time:
+            await self.bot.send_message(author,
+                                        "Check your time formatting, are you missing a `:`?")
+
+        # Assume time format is Hour:MinuteAM
+        time_format = '%I:%M%p'
+
+        time_bits = in_time.split(':')
+        # Assume time format is HourAM
+        if len(time_bits) == 1:
+            time_format = '%I%p'
+
+        dt = datetime.datetime.strptime(date + in_time, '%m/%d/%y' + time_format)
+
+        dm = await self.bot.send_message(author,
+                                         "Give the timezone for the raid."
+                                         "Ex: `PST` , `EST` etc. ")
+
+        timezone_msg = await self.bot.wait_for_message(channel=dm.channel,
+                                                       author=author, timeout=30)
+        if timezone_msg is None:
+            self._failed_create(author)
+            return
+
+        timezone = time_msg.content
+
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
-            today = datetime.datetime.today()
-            timeFormat = '%I:%M%p'
 
-            dateBits = inDate.split('/')
-            if len(dateBits) == 2:
-                date = inDate + "/" + datetime.datetime.strftime(today, '%y')
-            else:
-                date = inDate
-
-            timeBits = inTime.split(':')
-            if len(timeBits) == 1:
-                timeFormat = '%I%p'
-
-            dt = datetime.datetime.strptime(date + inTime, '%m/%d/%y' + timeFormat)
             finding = True
-            id = len(data)
+            id = 0
+            title = game + " | " + desc
             while finding:
                 finding = False
                 for raid in data:
@@ -118,19 +206,20 @@ class raidcog:
                         id += 1
                         finding = True
                         break
-            newRaid = {
+            new_raid = {
                 'members': [{
-                    'id':context.message.author.id,
-                    'name':context.message.author.name
+                    'id': author.id,
+                    'name': author.name
                 }],
                 'id': id,
                 'title': title,
                 'date': str(dt),
                 'timezone': timezone
             }
-            data.append(newRaid)
+            data.append(new_raid)
         self.save_data(data)
-        await self.bot.say("Added your raid " + title + " for " + str(dt) + ".")
+        await self.bot.send_message(author,
+                                    "Added your raid " + title + " for " + str(dt) + ".")
 
     @_raid.command(pass_context=True, name='join')
     async def _join(self, context, id: int, role: str = None):
@@ -176,6 +265,13 @@ class raidcog:
 
     @_raid.command(pass_context=True, name='delete')
     async def _delete(self, context, id: int):
+        self._remove_raid(context, id)
+
+    @_raid.command(pass_context=True, name='remove')
+    async def _remove(self, context, id: int):
+        self._remove_raid(context, id)
+
+    async def _remove_raid(self, context, id: int):
         with open('data/raidcog/raids.json') as data_file:
             data = json.load(data_file)
             for raid in data:
