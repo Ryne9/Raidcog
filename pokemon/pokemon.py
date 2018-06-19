@@ -54,8 +54,8 @@ class pokemon:
 
         pokemon["level"] = random.randint(1, 100)
 
-        title = "Oh wow you caught a " + pokemon["name"] + " (" + pokemon["id"] + ")"
-        description = "It's level " + pokemon["level"] + "\n"
+        title = "Oh wow you caught a " + pokemon["name"] + " (" + str(pokemon["id"]) + ")"
+        description = "It's level " + str(pokemon["level"]) + "\n"
         description += "It knows " + pokemon["learnedMoves"][0]["name"] + ",\n"
         description += pokemon["learnedMoves"][1]["name"] + ",\n"
         description += pokemon["learnedMoves"][2]["name"] + ",\n"
