@@ -38,7 +38,7 @@ class pokemon:
 
     @_pokemon.command(pass_context=True, name='create')
     async def _create(self, context):
-        with open('data/pokemon.json') as rawPokemon:
+        with open('data/pokemon/pokemon.json') as rawPokemon:
             pokemonData = json.load(rawPokemon)
             pokemon = pokemonData[random.randint(1, 150) - 1]
         # with open('data/pokemon/moves.json') as rawMoves:
