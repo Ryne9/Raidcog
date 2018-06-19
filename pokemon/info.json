@@ -1,0 +1,10 @@
+{
+    "AUTHOR" : "Arrow",
+    "INSTALL_MSG" : "Boop doop pokermans",
+    "NAME" : "pokemoncog",
+    "SHORT" : "Generates pokemon",
+    "DESCRIPTION" : "Generates pokemon from stuff",
+    "TAGS" : ["pokemon"],
+    "REQUIREMENTS" : [],
+    "HIDDEN" : false
+}
