@@ -52,7 +52,7 @@ class pokemon:
         background.paste(background)
         background.paste(image2, (165, 5), image2)
         background.paste(image1, (10, int(200 - 96 * 1.75)), image1)
-        background.resize(size=(256 * 2, 192 * 2), resample=Image.LANCZOS)
+        background = background.resize(size=(256 * 2, 192 * 2), resample=Image.LANCZOS)
         background.save("data/pokemon/compost.png", quality=100)
         await self.bot.send_file(context.message.channel, 'data/pokemon/compost.png')
 
