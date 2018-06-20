@@ -16,7 +16,7 @@ class pokemon:
 
     def __init__(self, bot):
         self.bot = bot
-        self.background = Image.open('data/sprites/battlebackground.png')
+        self.background = Image.open('data/pokemon/sprites/battlebackground.png')
 
     def save_data(self, data):
         with open('data/raidcog/raids.json', 'w') as outfile:
