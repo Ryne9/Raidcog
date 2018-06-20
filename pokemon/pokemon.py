@@ -1,6 +1,7 @@
 import discord
 import json
 import random
+import math
 import datetime
 import asyncio
 from cogs.utils.dataIO import dataIO
@@ -53,6 +54,7 @@ class pokemon:
         ]
 
         pokemon["level"] = random.randint(1, 100)
+        pokemon["actualStats"] = self.calculate_stats(pokemon["stats"], pokemon["level"])
 
         title = "Oh wow you caught a " + pokemon["name"] + "!"
         description = "PokeDex Number: " + str(pokemon["id"]) + "\n"
@@ -63,18 +65,32 @@ class pokemon:
         description += pokemon["learnedMoves"][1]["name"] + ", "
         description += pokemon["learnedMoves"][2]["name"] + ", "
         description += "and " + pokemon["learnedMoves"][3]["name"] + "!\n"
-        description += "Base Stats:\n"
-        description += "Speed: " + str(pokemon["stats"]["speed"]["base"]) + " HP: " + str(
-            pokemon["stats"]["hp"]["base"]) + "\n"
-        description += "Attack: " + str(pokemon["stats"]["attack"]["base"]) + " Special Attack: " + str(
-            pokemon["stats"]["special-attack"]["base"]) + "\n"
-        description += "Defense: " + str(pokemon["stats"]["defense"]["base"]) + " Special Defense: " + str(
-            pokemon["stats"]["special-defense"]["base"]) + "\n"
+        description += "Actual Stats:\n"
+        description += "Speed: " + str(pokemon["actualStats"]["speed"]) + " HP: " + str(
+            pokemon["actualStats"]["hp"]) + "\n"
+        description += "Attack: " + str(pokemon["actualStats"]["attack"]) + " Special Attack: " + str(
+            pokemon["actualStats"]["special-attack"]) + "\n"
+        description += "Defense: " + str(pokemon["actualStats"]["defense"]) + " Special Defense: " + str(
+            pokemon["actualStats"]["special-defense"]) + "\n"
 
         em = discord.Embed(title=title, description=description, color=discord.Color.blue())
         await self.bot.say(embed=em)
 
+    def calculate_stats(self, stats, level):
+        return {
+            "hp": self.calc_hp(stats["hp"]["base"], level),
+            "attack": self.calc_stat(stats["attack"]["base"], level),
+            "special-attack": self.calc_stat(stats["special-attack"]["base"], level),
+            "defense": self.calc_stat(stats["defense"]["base"], level),
+            "special-defense": self.calc_stat(stats["special-defense"]["base"], level),
+            "speed": self.calc_stat(stats["speed"]["base"], level)
+        }
 
+    def calc_hp(self, hp, level):
+        return math.floor((2 * hp) * level / 100) + level + 10
+
+    def calc_stat(self, stat, level):
+        return math.floor((2 * stat * level) / 100) + 5
 
 def setup(bot):
     bot.add_cog(pokemon(bot))
