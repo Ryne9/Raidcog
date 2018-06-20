@@ -48,7 +48,7 @@ class pokemon:
         image1 = Image.open('data/pokemon/sprites/' + str(pokemon1["id"]) + 'b.png').convert("RGBA")
         image1 = image1.resize(size=(96 * 2, 96 * 2))
         image2 = Image.open('data/pokemon/sprites/' + str(pokemon2["id"]) + 'f.png').convert("RGBA")
-        background = self.background.copy((256, 192))
+        background = self.background.copy()
         background.paste(background)
         background.paste(image2, (165, 5), image2)
         background.paste(image1, (10, int(200 - 96 * 1.75)), image1)
