@@ -2,6 +2,7 @@ import discord
 import json
 import random
 import math
+from PIL import Image
 import datetime
 import asyncio
 from cogs.utils.dataIO import dataIO
@@ -36,6 +37,21 @@ class pokemon:
             em = discord.Embed(title=title, description=description.format(prefix), color=discord.Color.blue())
             em.set_footer(text='This cog was made by Arrow.')
             await self.bot.say(embed=em)
+
+    @_pokemon.command(pass_context=True, name='image')
+    async def _image(self, context):
+        with open('data/pokemon/pokemon.json') as rawPokemon:
+            pokemonData = json.load(rawPokemon)
+            pokemon1 = pokemonData[random.randint(1, 150) - 1]
+            pokemon2 = pokemonData[random.randint(1, 150) - 1]
+            image1 = Image.open('data/pokemon/sprites/' + str(pokemon1["id"]) + 'b.png')
+            image2 = Image.open('data/pokemon/sprites/' + str(pokemon2["id"]) + 'f.png')
+            compost = Image.new(mode='RGBA', size=(300, 300))
+            compost.paste(image1, (0, 300 - 96))
+            compost.paste(image2, (300-96, 0))
+            compost.save("data/pokemon/compost.png", quality=30)
+            self.bot.send_file(context.message.channel, 'data/pokemon/compost.png')
+
 
     @_pokemon.command(pass_context=True, name='create')
     async def _create(self, context):
