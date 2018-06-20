@@ -44,13 +44,13 @@ class pokemon:
             pokemonData = json.load(rawPokemon)
             pokemon1 = pokemonData[random.randint(1, 150) - 1]
             pokemon2 = pokemonData[random.randint(1, 150) - 1]
-            image1 = Image.open('data/pokemon/sprites/' + str(pokemon1["id"]) + 'b.png')
-            image2 = Image.open('data/pokemon/sprites/' + str(pokemon2["id"]) + 'f.png')
-            compost = Image.new(mode='RGBA', size=(300, 300))
-            compost.paste(image1, (0, 300 - 96))
-            compost.paste(image2, (300-96, 0))
-            compost.save("data/pokemon/compost.png", quality=30)
-            self.bot.send_file(context.message.channel, 'data/pokemon/compost.png')
+        image1 = Image.open('data/pokemon/sprites/' + str(pokemon1["id"]) + 'b.png')
+        image2 = Image.open('data/pokemon/sprites/' + str(pokemon2["id"]) + 'f.png')
+        compost = Image.new(mode='RGB', size=(300, 300))
+        compost.paste(image1, (0, 300 - 96))
+        compost.paste(image2, (300-96, 0))
+        compost.save("data/pokemon/compost.png", quality=30)
+        self.bot.send_file(context.message.channel, 'data/pokemon/compost.png')
 
 
     @_pokemon.command(pass_context=True, name='create')
