@@ -54,12 +54,22 @@ class pokemon:
 
         pokemon["level"] = random.randint(1, 100)
 
-        title = "Oh wow you caught a " + pokemon["name"] + " (" + str(pokemon["id"]) + ")"
-        description = "It's level " + str(pokemon["level"]) + "\n"
-        description += "It knows " + pokemon["learnedMoves"][0]["name"] + ",\n"
-        description += pokemon["learnedMoves"][1]["name"] + ",\n"
-        description += pokemon["learnedMoves"][2]["name"] + ",\n"
-        description += "and " + pokemon["learnedMoves"][3]["name"] + ",\n"
+        title = "Oh wow you caught a " + pokemon["name"] + "!"
+        description = "PokeDex Number: " + str(pokemon["id"]) + "\n"
+        description += "Height: " + str(pokemon["height"])
+        description += " Weight: " + str(pokemon["weight"]) + "\n"
+        description += "Level: " + str(pokemon["level"]) + "\n"
+        description += "It knows " + pokemon["learnedMoves"][0]["name"] + ", "
+        description += pokemon["learnedMoves"][1]["name"] + ", "
+        description += pokemon["learnedMoves"][2]["name"] + ", "
+        description += "and " + pokemon["learnedMoves"][3]["name"] + "!\n"
+        description += "Base Stats:\n"
+        description += "Speed: " + str(pokemon["stats"]["speed"]["base"]) + " HP: " + str(
+            pokemon["stats"]["hp"]["base"]) + "\n"
+        description += "Attack: " + str(pokemon["stats"]["attack"]["base"]) + " Special Attack: " + str(
+            pokemon["stats"]["special-attack"]["base"]) + "\n"
+        description += "Defense: " + str(pokemon["stats"]["defense"]["base"]) + " Special Defense: " + str(
+            pokemon["stats"]["special-defense"]["base"]) + "\n"
 
         em = discord.Embed(title=title, description=description, color=discord.Color.blue())
         await self.bot.say(embed=em)
