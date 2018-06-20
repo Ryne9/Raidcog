@@ -45,9 +45,10 @@ class pokemon:
             pokemon1 = pokemonData[random.randint(1, 150) - 1]
             pokemon2 = pokemonData[random.randint(1, 150) - 1]
         image1 = Image.open('data/pokemon/sprites/' + str(pokemon1["id"]) + 'b.png')
+        image1 = image1.resize(size=(96 * 2, 96 * 2))
         image2 = Image.open('data/pokemon/sprites/' + str(pokemon2["id"]) + 'f.png')
         compost = Image.new(mode='RGB', size=(300, 200))
-        compost.paste(image1, (0, 200 - 96))
+        compost.paste(image1, (-32, int(200 - 96 * 1.5)))
         compost.paste(image2, (300-96, 0))
         compost.save("data/pokemon/compost.png", quality=30)
         await self.bot.send_file(context.message.channel, 'data/pokemon/compost.png')
