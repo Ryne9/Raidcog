@@ -74,6 +74,7 @@ class pokemon:
             pokemon["actualStats"]["special-defense"]) + "\n"
 
         em = discord.Embed(title=title, description=description, color=discord.Color.blue())
+        em.set_image(url=pokemon["sprites"]["front_default"])
         await self.bot.say(embed=em)
 
     def calculate_stats(self, stats, level):
