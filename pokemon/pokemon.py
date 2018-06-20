@@ -16,6 +16,7 @@ class pokemon:
 
     def __init__(self, bot):
         self.bot = bot
+        self.background = Image.open('data/sprites/battlebackground.png')
 
     def save_data(self, data):
         with open('data/raidcog/raids.json', 'w') as outfile:
@@ -44,13 +45,14 @@ class pokemon:
             pokemonData = json.load(rawPokemon)
             pokemon1 = pokemonData[random.randint(1, 150) - 1]
             pokemon2 = pokemonData[random.randint(1, 150) - 1]
-        image1 = Image.open('data/pokemon/sprites/' + str(pokemon1["id"]) + 'b.png')
+        image1 = Image.open('data/pokemon/sprites/' + str(pokemon1["id"]) + 'b.png').convert("RGBA")
         image1 = image1.resize(size=(96 * 2, 96 * 2))
-        image2 = Image.open('data/pokemon/sprites/' + str(pokemon2["id"]) + 'f.png')
-        compost = Image.new(mode='RGB', size=(300, 200))
-        compost.paste(image1, (-32, int(200 - 96 * 1.5)))
-        compost.paste(image2, (300-96, 0))
-        compost.save("data/pokemon/compost.png", quality=30)
+        image2 = Image.open('data/pokemon/sprites/' + str(pokemon2["id"]) + 'f.png').convert("RGBA")
+        background = self.background.copy((256, 192))
+        background.paste(background)
+        background.paste(image2, (165, 5), image2)
+        background.paste(image1, (10, int(200 - 96 * 1.75)), image1)
+        background.save("data/pokemon/compost.png", quality=30)
         await self.bot.send_file(context.message.channel, 'data/pokemon/compost.png')
 
 
