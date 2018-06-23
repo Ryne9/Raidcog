@@ -17,6 +17,9 @@ class pokemon:
     def __init__(self, bot):
         self.bot = bot
         self.background = Image.open('data/pokemon/sprites/battlebackground.png')
+        self.background2 = Image.open('data/pokemon/sprites/background.png')
+        self.playerbar = Image.open('data/pokemon/sprites/playerbar.png')
+        self.enemybar = Image.open('data/pokemon/sprites/enemybar.png')
         with open('data/pokemon/pokemon.json') as rawPokemon:
             self.pokemonData = json.load(rawPokemon)
         with open('data/pokemon/moves.json') as rawMoves:
@@ -56,6 +59,21 @@ class pokemon:
         background = background.resize(size=(256 * 2, 192 * 2))
         background.save("data/pokemon/compost.png", quality=100)
         await self.bot.send_file(context.message.channel, 'data/pokemon/compost.png')
+
+    @_pokemon.command(pass_context=True, name='battle')
+    async def _battle(self, context):
+        pokemon1 = self.pokemonData[random.randint(1, 150) - 1]
+        pokemon2 = self.pokemonData[random.randint(1, 150) - 1]
+        image1 = Image.open('data/sprites/' + str(pokemon1["id"]) + 'b.png').convert("RGBA")
+        image1 = image1.resize(size=(96 * 2, 96 * 2))
+        image2 = Image.open('data/sprites/' + str(pokemon2["id"]) + 'f.png').convert("RGBA")
+        background = self.background2.copy()
+        background.paste(image2, (148, 15), image2)
+        background.paste(image1, (-20, int(200 - 96 * 1.75)), image1)
+        background.paste(self.enemybar, (5, 23), self.enemybar)
+        background.paste(self.playerbar, (142, 95), self.playerbar)
+        # background = background.resize(size=(256 * 2, 192 * 2))
+        background.save("data/compost.png", quality=100)
 
     @_pokemon.command(pass_context=True, name='create')
     async def _create(self, context):
