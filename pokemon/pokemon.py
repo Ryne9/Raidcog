@@ -74,6 +74,7 @@ class pokemon:
         background.paste(self.playerbar, (142, 95), self.playerbar)
         # background = background.resize(size=(256 * 2, 192 * 2))
         background.save("data/compost.png", quality=100)
+        await self.bot.send_file(context.message.channel, 'data/pokemon/compost.png')
 
     @_pokemon.command(pass_context=True, name='create')
     async def _create(self, context):
