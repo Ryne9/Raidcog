@@ -72,7 +72,7 @@ class pokemon:
         background.paste(image1, (-20, int(200 - 96 * 1.75)), image1)
         background.paste(self.enemybar, (5, 23), self.enemybar)
         background.paste(self.playerbar, (142, 95), self.playerbar)
-        background = background.resize(size=(255 * 2, 143 * 2))
+        background = background.resize(size=(400, 255))
         background.save("data/pokemon/compost.png", quality=100)
         await self.bot.send_file(context.message.channel, 'data/pokemon/compost.png')
 
