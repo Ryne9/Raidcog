@@ -2,7 +2,7 @@ import discord
 import json
 import random
 import math
-from PIL import Image
+from PIL import Image, ImageDraw, ImageFont
 import datetime
 import asyncio
 from cogs.utils.dataIO import dataIO
@@ -24,6 +24,7 @@ class pokemon:
             self.pokemonData = json.load(rawPokemon)
         with open('data/pokemon/moves.json') as rawMoves:
             self.moveData = json.load(rawMoves)
+        self.font = ImageFont.truetype('data/pokemon/pokemonname.ttf', 6)
 
     # def save_data(self, data):
     #     with open('data/raidcog/raids.json', 'w') as outfile:
@@ -62,6 +63,7 @@ class pokemon:
 
     @_pokemon.command(pass_context=True, name='battle')
     async def _battle(self, context):
+        level = random.randint(1, 100)
         pokemon1 = self.pokemonData[random.randint(1, 150) - 1]
         pokemon2 = self.pokemonData[random.randint(1, 150) - 1]
         image1 = Image.open('data/pokemon/sprites/' + str(pokemon1["id"]) + 'b.png').convert("RGBA")
@@ -72,6 +74,15 @@ class pokemon:
         background.paste(image1, (-20, int(200 - 96 * 1.75)), image1)
         background.paste(self.enemybar, (5, 23), self.enemybar)
         background.paste(self.playerbar, (142, 95), self.playerbar)
+        draw = ImageDraw.Draw(background)
+        # Enemy pokmeon name
+        draw.text((10, 20), str.capitalize(pokemon2["name"]), font=self.font, fill=(0, 0, 0, 255))
+        # Player pokemon name
+        draw.text((147, 93), str.capitalize(pokemon1["name"]), font=self.font, fill=(0, 0, 0, 255))
+        # Enemy pokmeon level
+        draw.text((93, 22), str(level), font=self.font, fill=(0, 0, 0, 255))
+        # Player pokemon level
+        draw.text((226, 95), str(level), font=self.font, fill=(0, 0, 0, 255))
         background = background.resize(size=(400, 255))
         background.save("data/pokemon/compost.png", quality=100)
         await self.bot.send_file(context.message.channel, 'data/pokemon/compost.png')
