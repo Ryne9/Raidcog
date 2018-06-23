@@ -20,7 +20,7 @@ class pokemon:
         with open('data/pokemon/pokemon.json') as rawPokemon:
             self.pokemonData = json.load(rawPokemon)
         with open('data/pokemon/moves.json') as rawMoves:
-            self.movedata = json.load(rawMoves)
+            self.moveData = json.load(rawMoves)
 
     # def save_data(self, data):
     #     with open('data/raidcog/raids.json', 'w') as outfile:
@@ -51,7 +51,6 @@ class pokemon:
         image1 = image1.resize(size=(96 * 2, 96 * 2))
         image2 = Image.open('data/pokemon/sprites/' + str(pokemon2["id"]) + 'f.png').convert("RGBA")
         background = self.background.copy()
-        background.paste(background)
         background.paste(image2, (165, 5), image2)
         background.paste(image1, (10, int(200 - 96 * 1.75)), image1)
         background = background.resize(size=(256 * 2, 192 * 2))
