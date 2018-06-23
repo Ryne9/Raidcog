@@ -17,7 +17,7 @@ class pokemon:
     def __init__(self, bot):
         self.bot = bot
         self.backgrounds = [
-            Image.open('data/pokemon/sprites/battlebackground.png'),
+            Image.open('data/pokemon/sprites/background.png'),
             Image.open('data/pokemon/sprites/cavebackground.png'),
             Image.open('data/pokemon/sprites/darkbackground.png'),
             Image.open('data/pokemon/sprites/ghostbackground.png'),
