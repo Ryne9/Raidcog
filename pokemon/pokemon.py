@@ -17,10 +17,14 @@ class pokemon:
     def __init__(self, bot):
         self.bot = bot
         self.background = Image.open('data/pokemon/sprites/battlebackground.png')
+        with open('data/pokemon/pokemon.json') as rawPokemon:
+            self.pokemonData = json.load(rawPokemon)
+        with open('data/pokemon/moves.json') as rawMoves:
+            self.movedata = json.load(rawMoves)
 
-    def save_data(self, data):
-        with open('data/raidcog/raids.json', 'w') as outfile:
-            json.dump(data, outfile)
+    # def save_data(self, data):
+    #     with open('data/raidcog/raids.json', 'w') as outfile:
+    #         json.dump(data, outfile)
 
     def get_user(self, user_id):
         return discord.User(id=str(user_id))
@@ -41,10 +45,8 @@ class pokemon:
 
     @_pokemon.command(pass_context=True, name='image')
     async def _image(self, context):
-        with open('data/pokemon/pokemon.json') as rawPokemon:
-            pokemonData = json.load(rawPokemon)
-            pokemon1 = pokemonData[random.randint(1, 150) - 1]
-            pokemon2 = pokemonData[random.randint(1, 150) - 1]
+        pokemon1 = self.pokemonData[random.randint(1, 150) - 1]
+        pokemon2 = self.pokemonData[random.randint(1, 150) - 1]
         image1 = Image.open('data/pokemon/sprites/' + str(pokemon1["id"]) + 'b.png').convert("RGBA")
         image1 = image1.resize(size=(96 * 2, 96 * 2))
         image2 = Image.open('data/pokemon/sprites/' + str(pokemon2["id"]) + 'f.png').convert("RGBA")
@@ -56,14 +58,9 @@ class pokemon:
         background.save("data/pokemon/compost.png", quality=100)
         await self.bot.send_file(context.message.channel, 'data/pokemon/compost.png')
 
-
     @_pokemon.command(pass_context=True, name='create')
     async def _create(self, context):
-        with open('data/pokemon/pokemon.json') as rawPokemon:
-            pokemonData = json.load(rawPokemon)
-            pokemon = pokemonData[random.randint(1, 150) - 1]
-        # with open('data/pokemon/moves.json') as rawMoves:
-        #     movesData = json.load(rawMoves)
+        pokemon = self.pokemonData[random.randint(1, 150) - 1]
         pokemonMoveMax = len(pokemon["moves"]) - 1
 
         pokemon["learnedMoves"] = [

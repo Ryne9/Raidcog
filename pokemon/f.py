@@ -10,13 +10,17 @@ with open('data/pokemon.json') as rawPokemon:
     pokemon1 = pokemonData[random.randint(1, 150) - 1]
     pokemon2 = pokemonData[random.randint(1, 150) - 1]
 image1 = Image.open('data/sprites/' + str(pokemon1["id"]) + 'b.png').convert("RGBA")
-image1 = image1.resize(size=(96 * 2, 96 * 2))
+image1 = image1.resize(size=(96 * 2, 96 * 2), resample=Image.NEAREST)
+image = image1.resize(size=(96 * 2, 96 * 2))
+image.save("nearest.png", quality=100)
 image2 = Image.open('data/sprites/' + str(pokemon2["id"]) + 'f.png').convert("RGBA")
 background = background.copy()
 background.paste(background)
 background.paste(image2, (165, 5), image2)
 background.paste(image1, (10, int(200 - 96 * 1.75)), image1)
-background.save("data/compost.png", quality=30)
+background = background.resize(size=(256 * 5, 192 * 5))
+
+background.save("data/compost.png", quality=100)
 #self.bot.send_file(context.message.channel, 'data/pokemon/compost.png')
 
 
