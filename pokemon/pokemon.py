@@ -92,9 +92,9 @@ class pokemon:
         # Player health
         health = 100
         leftPad = len(str(health))
-        draw.text((339 - (10) * leftPad, 211), str(pokemon1["actualstats"]["hp"]["base"]), font=self.healthFont,
+        draw.text((339 - (10) * leftPad, 211), str(pokemon1["actualStats"]["hp"]["base"]), font=self.healthFont,
                   fill=(255, 255, 255, 255))
-        draw.text((350, 211), str(pokemon1["actualstats"]["hp"]["base"]), font=self.healthFont,
+        draw.text((350, 211), str(pokemon1["actualStats"]["hp"]["base"]), font=self.healthFont,
                   fill=(255, 255, 255, 255))
 
         background.save("data/pokemon/compost.png", quality=100)
