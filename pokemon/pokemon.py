@@ -18,9 +18,9 @@ class pokemon:
         self.bot = bot
         self.backgrounds = [
             Image.open('data/pokemon/sprites/background.png'),
-            Image.open('data/pokemon/sprites/cavebackground.png'),
-            Image.open('data/pokemon/sprites/darkbackground.png'),
-            Image.open('data/pokemon/sprites/ghostbackground.png'),
+            # Image.open('data/pokemon/sprites/cavebackground.png'),
+            # Image.open('data/pokemon/sprites/darkbackground.png'),
+            # Image.open('data/pokemon/sprites/ghostbackground.png'),
             Image.open('data/pokemon/sprites/normalbackground.png'),
             Image.open('data/pokemon/sprites/rockbackground.png'),
             Image.open('data/pokemon/sprites/sandbackground.png'),
