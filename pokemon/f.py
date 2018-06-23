@@ -27,7 +27,7 @@ background.paste(playerbar, (142, 105), playerbar)
 background = background.resize(size=(400, 255))
 draw = ImageDraw.Draw(background)
 #Enemy pokmeon name
-draw.text((15, 35), str.capitalize(pokemon2["name"]), font=font, fill=(0, 0, 0, 255))
+draw.text((15, 37), str.capitalize(pokemon2["name"]), font=font, fill=(0, 0, 0, 255))
 #Player pokemon name
 draw.text((231, 184), str.capitalize(pokemon1["name"]), font=font, fill=(0, 0, 0, 255))
 #Enemy pokmeon level

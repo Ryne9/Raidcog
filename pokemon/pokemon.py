@@ -82,7 +82,7 @@ class pokemon:
 
         draw = ImageDraw.Draw(background)
         # Enemy pokmeon name
-        draw.text((15, 35), str.capitalize(pokemon2["name"]), font=self.font, fill=(0, 0, 0, 255))
+        draw.text((15, 37), str.capitalize(pokemon2["name"]), font=self.font, fill=(0, 0, 0, 255))
         # Player pokemon name
         draw.text((231, 184), str.capitalize(pokemon1["name"]), font=self.font, fill=(0, 0, 0, 255))
         # Enemy pokmeon level
