@@ -22,16 +22,16 @@ background = background.copy()
 background.paste(image2, (148, 15), image2)
 background.paste(image1, (-20, int(200 - 96 * 1.75)), image1)
 background.paste(enemybar, (5, 23), enemybar)
-background.paste(playerbar, (142, 95), playerbar)
+background.paste(playerbar, (142, 105), playerbar)
 draw = ImageDraw.Draw(background)
 #Enemy pokmeon name
-draw.text((10, 20), str.capitalize(pokemon2["name"]), font=font, fill=(0, 0, 0, 255))
+draw.text((10, 21), str.capitalize(pokemon2["name"]), font=font, fill=(0, 0, 0, 255))
 #Player pokemon name
-draw.text((147, 93), str.capitalize(pokemon1["name"]), font=font, fill=(0, 0, 0, 255))
+draw.text((147, 103), str.capitalize(pokemon1["name"]), font=font, fill=(0, 0, 0, 255))
 #Enemy pokmeon level
 draw.text((93, 22), str(level), font=font, fill=(0, 0, 0, 255))
 #Player pokemon level
-draw.text((226, 95), str(level), font=font, fill=(0, 0, 0, 255))
+draw.text((226, 104), str(level), font=font, fill=(0, 0, 0, 255))
 background = background.resize(size=(400, 255))
 background.save("data/compost.png", quality=100)
 

@@ -73,16 +73,16 @@ class pokemon:
         background.paste(image2, (148, 15), image2)
         background.paste(image1, (-20, int(200 - 96 * 1.75)), image1)
         background.paste(self.enemybar, (5, 23), self.enemybar)
-        background.paste(self.playerbar, (142, 95), self.playerbar)
+        background.paste(self.playerbar, (142, 105), self.playerbar)
         draw = ImageDraw.Draw(background)
         # Enemy pokmeon name
-        draw.text((10, 20), str.capitalize(pokemon2["name"]), font=self.font, fill=(0, 0, 0, 255))
+        draw.text((10, 21), str.capitalize(pokemon2["name"]), font=self.font, fill=(0, 0, 0, 255))
         # Player pokemon name
-        draw.text((147, 93), str.capitalize(pokemon1["name"]), font=self.font, fill=(0, 0, 0, 255))
+        draw.text((147, 103), str.capitalize(pokemon1["name"]), font=self.font, fill=(0, 0, 0, 255))
         # Enemy pokmeon level
         draw.text((93, 22), str(level), font=self.font, fill=(0, 0, 0, 255))
         # Player pokemon level
-        draw.text((226, 95), str(level), font=self.font, fill=(0, 0, 0, 255))
+        draw.text((226, 104), str(level), font=self.font, fill=(0, 0, 0, 255))
         background = background.resize(size=(400, 255))
         background.save("data/pokemon/compost.png", quality=100)
         await self.bot.send_file(context.message.channel, 'data/pokemon/compost.png')
