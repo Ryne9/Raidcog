@@ -64,9 +64,9 @@ class pokemon:
     async def _battle(self, context):
         pokemon1 = self.pokemonData[random.randint(1, 150) - 1]
         pokemon2 = self.pokemonData[random.randint(1, 150) - 1]
-        image1 = Image.open('data/sprites/' + str(pokemon1["id"]) + 'b.png').convert("RGBA")
+        image1 = Image.open('data/pokemon/sprites/' + str(pokemon1["id"]) + 'b.png').convert("RGBA")
         image1 = image1.resize(size=(96 * 2, 96 * 2))
-        image2 = Image.open('data/sprites/' + str(pokemon2["id"]) + 'f.png').convert("RGBA")
+        image2 = Image.open('data/pokemon/sprites/' + str(pokemon2["id"]) + 'f.png').convert("RGBA")
         background = self.background2.copy()
         background.paste(image2, (148, 15), image2)
         background.paste(image1, (-20, int(200 - 96 * 1.75)), image1)
