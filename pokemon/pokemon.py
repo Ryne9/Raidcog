@@ -24,11 +24,8 @@ class pokemon:
             self.pokemonData = json.load(rawPokemon)
         with open('data/pokemon/moves.json') as rawMoves:
             self.moveData = json.load(rawMoves)
-        self.font = ImageFont.truetype('data/pokemon/pokemonname.ttf', 6)
-
-    # def save_data(self, data):
-    #     with open('data/raidcog/raids.json', 'w') as outfile:
-    #         json.dump(data, outfile)
+        self.font = ImageFont.truetype('data/pokemon/pokemonname.ttf', 10)
+        self.healthFont = ImageFont.truetype('data/pokemon/pokemonname.ttf', 9)
 
     def get_user(self, user_id):
         return discord.User(id=str(user_id))
@@ -66,24 +63,40 @@ class pokemon:
         level = random.randint(1, 100)
         pokemon1 = self.pokemonData[random.randint(1, 150) - 1]
         pokemon2 = self.pokemonData[random.randint(1, 150) - 1]
+
+        pokemon1["level"] = level
+        pokemon2["level"] = level
+        pokemon1["actualStats"] = self.calculate_stats(pokemon1["stats"], pokemon1["level"])
+        pokemon2["actualStats"] = self.calculate_stats(pokemon2["stats"], pokemon2["level"])
+
         image1 = Image.open('data/pokemon/sprites/' + str(pokemon1["id"]) + 'b.png').convert("RGBA")
         image1 = image1.resize(size=(96 * 2, 96 * 2))
         image2 = Image.open('data/pokemon/sprites/' + str(pokemon2["id"]) + 'f.png').convert("RGBA")
+
         background = self.background2.copy()
         background.paste(image2, (148, 15), image2)
         background.paste(image1, (-20, int(200 - 96 * 1.75)), image1)
         background.paste(self.enemybar, (5, 23), self.enemybar)
         background.paste(self.playerbar, (142, 105), self.playerbar)
+        background = background.resize(size=(400, 255))
+
         draw = ImageDraw.Draw(background)
         # Enemy pokmeon name
-        draw.text((10, 21), str.capitalize(pokemon2["name"]), font=self.font, fill=(0, 0, 0, 255))
+        draw.text((15, 35), str.capitalize(pokemon2["name"]), font=self.font, fill=(0, 0, 0, 255))
         # Player pokemon name
-        draw.text((147, 103), str.capitalize(pokemon1["name"]), font=self.font, fill=(0, 0, 0, 255))
+        draw.text((231, 184), str.capitalize(pokemon1["name"]), font=self.font, fill=(0, 0, 0, 255))
         # Enemy pokmeon level
-        draw.text((93, 22), str(level), font=self.font, fill=(0, 0, 0, 255))
+        draw.text((146, 38), str(level), font=self.font, fill=(0, 0, 0, 255))
         # Player pokemon level
-        draw.text((226, 104), str(level), font=self.font, fill=(0, 0, 0, 255))
-        background = background.resize(size=(400, 255))
+        draw.text((354, 185), str(level), font=self.font, fill=(0, 0, 0, 255))
+        # Player health
+        health = 100
+        leftPad = len(str(health))
+        draw.text((339 - (10) * leftPad, 211), str(pokemon1["actualstats"]["hp"]["base"]), font=self.healthFont,
+                  fill=(255, 255, 255, 255))
+        draw.text((350, 211), str(pokemon1["actualstats"]["hp"]["base"]), font=self.healthFont,
+                  fill=(255, 255, 255, 255))
+
         background.save("data/pokemon/compost.png", quality=100)
         await self.bot.send_file(context.message.channel, 'data/pokemon/compost.png')
 

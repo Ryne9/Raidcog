@@ -10,7 +10,8 @@ with open('data/moves.json') as rawMoves:
     moveData = json.load(rawMoves)
 playerbar = Image.open('data/sprites/playerbar.png')
 enemybar = Image.open('data/sprites/enemybar.png')
-font = ImageFont.truetype('data/pokemonname.ttf', 6)
+font = ImageFont.truetype('data/pokemonname.ttf', 10)
+healthFont = ImageFont.truetype('data/pokemonname.ttf', 9)
 
 level = random.randint(1, 100)
 pokemon1 = pokemonData[random.randint(1, 150) - 1]
@@ -23,16 +24,21 @@ background.paste(image2, (148, 15), image2)
 background.paste(image1, (-20, int(200 - 96 * 1.75)), image1)
 background.paste(enemybar, (5, 23), enemybar)
 background.paste(playerbar, (142, 105), playerbar)
+background = background.resize(size=(400, 255))
 draw = ImageDraw.Draw(background)
 #Enemy pokmeon name
-draw.text((10, 21), str.capitalize(pokemon2["name"]), font=font, fill=(0, 0, 0, 255))
+draw.text((15, 35), str.capitalize(pokemon2["name"]), font=font, fill=(0, 0, 0, 255))
 #Player pokemon name
-draw.text((147, 103), str.capitalize(pokemon1["name"]), font=font, fill=(0, 0, 0, 255))
+draw.text((231, 184), str.capitalize(pokemon1["name"]), font=font, fill=(0, 0, 0, 255))
 #Enemy pokmeon level
-draw.text((93, 22), str(level), font=font, fill=(0, 0, 0, 255))
+draw.text((146, 38), str(level), font=font, fill=(0, 0, 0, 255))
 #Player pokemon level
-draw.text((226, 104), str(level), font=font, fill=(0, 0, 0, 255))
-background = background.resize(size=(400, 255))
+draw.text((354, 185), str(level), font=font, fill=(0, 0, 0, 255))
+#Player health
+health = 100
+leftPad = len(str(health))
+draw.text((339 - (10) * leftPad, 211), str(health), font=healthFont, fill=(255, 255, 255, 255))
+draw.text((350, 211), str(health), font=healthFont, fill=(255, 255, 255, 255))
 background.save("data/compost.png", quality=100)
 
 
