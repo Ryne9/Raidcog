@@ -16,8 +16,18 @@ class pokemon:
 
     def __init__(self, bot):
         self.bot = bot
-        self.background = Image.open('data/pokemon/sprites/battlebackground.png')
-        self.background2 = Image.open('data/pokemon/sprites/background.png')
+        self.backgrounds = [
+            Image.open('data/pokemon/sprites/battlebackground.png'),
+            Image.open('data/pokemon/sprites/cavebackground.png'),
+            Image.open('data/pokemon/sprites/darkbackground.png'),
+            Image.open('data/pokemon/sprites/ghostbackground.png'),
+            Image.open('data/pokemon/sprites/normalbackground.png'),
+            Image.open('data/pokemon/sprites/rockbackground.png'),
+            Image.open('data/pokemon/sprites/sandbackground.png'),
+            Image.open('data/pokemon/sprites/snowbackground.png'),
+            Image.open('data/pokemon/sprites/steelbackground.png'),
+            Image.open('data/pokemon/sprites/waterbackground.png'),
+        ]
         self.playerbar = Image.open('data/pokemon/sprites/playerbar.png')
         self.enemybar = Image.open('data/pokemon/sprites/enemybar.png')
         with open('data/pokemon/pokemon.json') as rawPokemon:
@@ -51,7 +61,7 @@ class pokemon:
         image1 = Image.open('data/pokemon/sprites/' + str(pokemon1["id"]) + 'b.png').convert("RGBA")
         image1 = image1.resize(size=(96 * 2, 96 * 2))
         image2 = Image.open('data/pokemon/sprites/' + str(pokemon2["id"]) + 'f.png').convert("RGBA")
-        background = self.background.copy()
+        background = self.backgrounds[random.randint(0, len(self.backgrounds) - 1)].copy()
         background.paste(image2, (165, 5), image2)
         background.paste(image1, (10, int(200 - 96 * 1.75)), image1)
         background = background.resize(size=(256 * 2, 192 * 2))
@@ -73,7 +83,7 @@ class pokemon:
         image1 = image1.resize(size=(96 * 2, 96 * 2))
         image2 = Image.open('data/pokemon/sprites/' + str(pokemon2["id"]) + 'f.png').convert("RGBA")
 
-        background = self.background2.copy()
+        background = self.backgrounds[random.randint(0, len(self.backgrounds) - 1)].copy()
         background.paste(image2, (148, 15), image2)
         background.paste(image1, (-20, int(200 - 96 * 1.75)), image1)
         background.paste(self.enemybar, (5, 23), self.enemybar)
