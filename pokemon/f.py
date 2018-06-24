@@ -13,6 +13,10 @@ enemybar = Image.open('data/sprites/enemybar.png')
 font = ImageFont.truetype('data/pokemonname.ttf', 10)
 healthFont = ImageFont.truetype('data/pokemonname.ttf', 9)
 
+healthbar_high = Image.open('data/sprites/healthbar_high.png')
+healthbar_half = Image.open('data/sprites/healthbar_half.png')
+healthbar_low = Image.open('data/sprites/healthbar_low.png')
+
 def makePlayerBar(pokemon):
     plyrbar = playerbar.copy()
     draw = ImageDraw.Draw(plyrbar)
@@ -25,6 +29,10 @@ def makePlayerBar(pokemon):
     leftPad = len(str(health))
     draw.text((131 - (10) * leftPad, 23), str(health), font=healthFont, fill=(255, 255, 255, 255))
     draw.text((140, 23), str(health), font=healthFont, fill=(255, 255, 255, 255))
+    healthbar = healthbar_high.copy()
+    healthbar = healthbar.resize(size=(84, 5))
+    plyrbar.paste(healthbar, (87, 16))
+    plyrbar.save("playerbar.png")
     return plyrbar
 
 def makeEnemyBar(pokemon):
@@ -34,6 +42,10 @@ def makeEnemyBar(pokemon):
     draw.text((5, -1), str.capitalize(pokemon["name"]), font=font, fill=(0, 0, 0, 255))
     # Enemy pokmeon level
     draw.text((152, 0), str(pokemon["level"]), font=font, fill=(0, 0, 0, 255))
+    healthbar = healthbar_high.copy()
+    healthbar = healthbar.resize(size=(84, 5))
+    enmybr.paste(healthbar, (66, 17))
+    enmybr.save("enemybar.png")
     return enmybr
 
 level = random.randint(1, 100)

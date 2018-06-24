@@ -36,9 +36,23 @@ class pokemon:
             self.moveData = json.load(rawMoves)
         self.font = ImageFont.truetype('data/pokemon/pokemonname.ttf', 10)
         self.healthFont = ImageFont.truetype('data/pokemon/pokemonname.ttf', 9)
+        self.healthbar_high = Image.open('data/pokemon/sprites/healthbar_high.png')
+        self.healthbar_half = Image.open('data/pokemon/sprites/healthbar_half.png')
+        self.healthbar_low = Image.open('data/pokemon/sprites/healthbar_low.png')
 
     def get_user(self, user_id):
         return discord.User(id=str(user_id))
+
+    def getHealthBar(self, health, maxHealth):
+        if (health > maxHealth / 2):
+            healthbar = self.healthbar_high.copy()
+        elif (health <= maxHealth / 2) and (health > maxHealth * 0.2):
+            healthbar = self.healthbar_half.copy()
+        else:
+            healthbar = self.healthbar_low.copy()
+        healthbar = healthbar.resize(size=(int((health/maxHealth) * 84), 5))
+        return healthbar
+
 
     def makePlayerBar(self, pokemon):
         plyrbar = self.playerbar.copy()
@@ -48,10 +62,12 @@ class pokemon:
         # Player pokemon level
         draw.text((145, 0), str(pokemon["level"]), font=self.font, fill=(0, 0, 0, 255))
         # Player health
-        health = pokemon["actualStats"]["hp"]
+        health = pokemon["health"]
         leftPad = len(str(health))
         draw.text((131 - (10) * leftPad, 23), str(health), font=self.healthFont, fill=(255, 255, 255, 255))
-        draw.text((140, 23), str(health), font=self.healthFont, fill=(255, 255, 255, 255))
+        draw.text((140, 23), str(pokemon["actualStats"]["hp"]), font=self.healthFont, fill=(255, 255, 255, 255))
+        healthbar = self.getHealthBar(pokemon["health"], pokemon["actualStats"]["hp"])
+        plyrbar.paste(healthbar, (87, 16))
         return plyrbar
 
     def makeEnemyBar(self, pokemon):
@@ -61,6 +77,8 @@ class pokemon:
         draw.text((5, -1), str.capitalize(pokemon["name"]), font=self.font, fill=(0, 0, 0, 255))
         # Enemy pokmeon level
         draw.text((152, 0), str(pokemon["level"]), font=self.font, fill=(0, 0, 0, 255))
+        healthbar = self.getHealthBar(pokemon["health"], pokemon["actualStats"]["hp"])
+        enmybr.paste(healthbar, (66, 17))
         return enmybr
 
     @commands.group(pass_context=True, name='pokemon')
@@ -101,6 +119,8 @@ class pokemon:
         pokemon2["level"] = level
         pokemon1["actualStats"] = self.calculate_stats(pokemon1["stats"], pokemon1["level"])
         pokemon2["actualStats"] = self.calculate_stats(pokemon2["stats"], pokemon2["level"])
+        pokemon1["health"] = random.randint(1, pokemon1["actualStats"]["hp"])
+        pokemon2["health"] = random.randint(1, pokemon2["actualStats"]["hp"])
 
         image1 = Image.open('data/pokemon/sprites/' + str(pokemon1["id"]) + 'b.png').convert("RGBA")
         image1 = image1.resize(size=(96 * 3, 96 * 3))
