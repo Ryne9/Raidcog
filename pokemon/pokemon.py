@@ -40,6 +40,29 @@ class pokemon:
     def get_user(self, user_id):
         return discord.User(id=str(user_id))
 
+    def makePlayerBar(self, pokemon):
+        plyrbar = self.playerbar.copy()
+        draw = ImageDraw.Draw(plyrbar)
+        # Player pokemon name
+        draw.text((6, -2), str.capitalize(pokemon["name"]), font=self.font, fill=(0, 0, 0, 255))
+        # Player pokemon level
+        draw.text((145, 0), str(pokemon["level"]), font=self.font, fill=(0, 0, 0, 255))
+        # Player health
+        health = pokemon["actualStats"]["hp"]
+        leftPad = len(str(health))
+        draw.text((131 - (10) * leftPad, 23), str(health), font=self.healthFont, fill=(255, 255, 255, 255))
+        draw.text((140, 23), str(health), font=self.healthFont, fill=(255, 255, 255, 255))
+        return plyrbar
+
+    def makeEnemyBar(self, pokemon):
+        enmybr = self.enemybar.copy()
+        draw = ImageDraw.Draw(enmybr)
+        # Enemy pokmeon name
+        draw.text((5, -1), str.capitalize(pokemon["name"]), font=self.font, fill=(0, 0, 0, 255))
+        # Enemy pokmeon level
+        draw.text((152, 0), str(pokemon["level"]), font=self.font, fill=(0, 0, 0, 255))
+        return enmybr
+
     @commands.group(pass_context=True, name='pokemon')
     async def _pokemon(self, context):
         """Raid Commands!"""
@@ -80,32 +103,18 @@ class pokemon:
         pokemon2["actualStats"] = self.calculate_stats(pokemon2["stats"], pokemon2["level"])
 
         image1 = Image.open('data/pokemon/sprites/' + str(pokemon1["id"]) + 'b.png').convert("RGBA")
-        image1 = image1.resize(size=(96 * 2, 96 * 2))
+        image1 = image1.resize(size=(96 * 3, 96 * 3))
         image2 = Image.open('data/pokemon/sprites/' + str(pokemon2["id"]) + 'f.png').convert("RGBA")
+        image2 = image2.resize(size=(144, 144))
 
         background = self.backgrounds[random.randint(0, len(self.backgrounds) - 1)].copy()
-        background.paste(image2, (148, 15), image2)
-        background.paste(image1, (-20, int(200 - 96 * 1.75)), image1)
-        background.paste(self.enemybar, (5, 23), self.enemybar)
-        background.paste(self.playerbar, (142, 105), self.playerbar)
-        background = background.resize(size=(400, 255))
+        background.paste(image2, (228, 60), image2)
+        background.paste(image1, (-53, 57), image1)
 
-        draw = ImageDraw.Draw(background)
-        # Enemy pokmeon name
-        draw.text((15, 37), str.capitalize(pokemon2["name"]), font=self.font, fill=(0, 0, 0, 255))
-        # Player pokemon name
-        draw.text((231, 184), str.capitalize(pokemon1["name"]), font=self.font, fill=(0, 0, 0, 255))
-        # Enemy pokmeon level
-        draw.text((146, 38), str(level), font=self.font, fill=(0, 0, 0, 255))
-        # Player pokemon level
-        draw.text((354, 185), str(level), font=self.font, fill=(0, 0, 0, 255))
-        # Player health
-        health = 100
-        leftPad = len(str(pokemon1["actualStats"]["hp"]))
-        draw.text((339 - 10 * leftPad, 211), str(pokemon1["actualStats"]["hp"]), font=self.healthFont,
-                  fill=(255, 255, 255, 255))
-        draw.text((350, 211), str(pokemon1["actualStats"]["hp"]), font=self.healthFont,
-                  fill=(255, 255, 255, 255))
+        plyrbar = self.makePlayerBar(pokemon1)
+        background.paste(plyrbar, (200, 188), plyrbar)
+        enmybar = self.makeEnemyBar(pokemon2)
+        background.paste(enmybar, (5, 23), enmybar)
 
         background.save("data/pokemon/compost.png", quality=100)
         await self.bot.send_file(context.message.channel, 'data/pokemon/compost.png')

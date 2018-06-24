@@ -13,33 +13,51 @@ enemybar = Image.open('data/sprites/enemybar.png')
 font = ImageFont.truetype('data/pokemonname.ttf', 10)
 healthFont = ImageFont.truetype('data/pokemonname.ttf', 9)
 
+def makePlayerBar(pokemon):
+    plyrbar = playerbar.copy()
+    draw = ImageDraw.Draw(plyrbar)
+    # Player pokemon name
+    draw.text((6, -2), str.capitalize(pokemon["name"]), font=font, fill=(0, 0, 0, 255))
+    # Player pokemon level
+    draw.text((145, 0), str(pokemon["level"]), font=font, fill=(0, 0, 0, 255))
+    # Player health
+    health = 222
+    leftPad = len(str(health))
+    draw.text((131 - (10) * leftPad, 23), str(health), font=healthFont, fill=(255, 255, 255, 255))
+    draw.text((140, 23), str(health), font=healthFont, fill=(255, 255, 255, 255))
+    return plyrbar
+
+def makeEnemyBar(pokemon):
+    enmybr = enemybar.copy()
+    draw = ImageDraw.Draw(enmybr)
+    # Enemy pokmeon name
+    draw.text((5, -1), str.capitalize(pokemon["name"]), font=font, fill=(0, 0, 0, 255))
+    # Enemy pokmeon level
+    draw.text((152, 0), str(pokemon["level"]), font=font, fill=(0, 0, 0, 255))
+    return enmybr
+
 level = random.randint(1, 100)
 pokemon1 = pokemonData[random.randint(1, 150) - 1]
 pokemon2 = pokemonData[random.randint(1, 150) - 1]
+pokemon1["level"] = level
+pokemon2["level"] = level
+
 image1 = Image.open('data/sprites/' + str(pokemon1["id"]) + 'b.png').convert("RGBA")
-image1 = image1.resize(size=(96 * 2, 96 * 2))
+image1 = image1.resize(size=(96 * 3, 96 * 3))
 image2 = Image.open('data/sprites/' + str(pokemon2["id"]) + 'f.png').convert("RGBA")
+image2 = image2.resize(size=(144, 144))
+
 background = background.copy()
-background.paste(image2, (148, 15), image2)
-background.paste(image1, (-20, int(200 - 96 * 1.75)), image1)
-background.paste(enemybar, (5, 23), enemybar)
-background.paste(playerbar, (142, 105), playerbar)
-background = background.resize(size=(400, 255))
-draw = ImageDraw.Draw(background)
-#Enemy pokmeon name
-draw.text((15, 37), str.capitalize(pokemon2["name"]), font=font, fill=(0, 0, 0, 255))
-#Player pokemon name
-draw.text((231, 184), str.capitalize(pokemon1["name"]), font=font, fill=(0, 0, 0, 255))
-#Enemy pokmeon level
-draw.text((146, 38), str(level), font=font, fill=(0, 0, 0, 255))
-#Player pokemon level
-draw.text((354, 185), str(level), font=font, fill=(0, 0, 0, 255))
-#Player health
-health = 100
-leftPad = len(str(health))
-draw.text((339 - (10) * leftPad, 211), str(health), font=healthFont, fill=(255, 255, 255, 255))
-draw.text((350, 211), str(health), font=healthFont, fill=(255, 255, 255, 255))
+background.paste(image2, (228, 60), image2)
+background.paste(image1, (-53, 57), image1)
+
+plyrbar = makePlayerBar(pokemon1)
+background.paste(plyrbar, (200, 188), plyrbar)
+enmybar = makeEnemyBar(pokemon2)
+background.paste(enmybar, (5, 23), enmybar)
+
 background.save("data/compost.png", quality=100)
+
 
 
 
