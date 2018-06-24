@@ -110,7 +110,7 @@ class pokemon:
         await self.bot.send_file(context.message.channel, 'data/pokemon/compost.png')
 
     @_pokemon.command(pass_context=True, name='battle')
-    async def _battle(self, context, x):
+    async def _battle(self, context, x: int):
         level = random.randint(1, 100)
         pokemon1 = self.pokemonData[random.randint(1, 150) - 1]
         pokemon2 = self.pokemonData[random.randint(1, 150) - 1]
