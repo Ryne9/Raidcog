@@ -136,7 +136,7 @@ class pokemon:
         enmybar = self.makeEnemyBar(pokemon2)
         background.paste(enmybar, (5, 23), enmybar)
         if x:
-            background = background.resize(size=(x, 400))
+            background = background.resize(size=(x, 255))
 
         background.save("data/pokemon/compost.png", quality=100)
         await self.bot.send_file(context.message.channel, 'data/pokemon/compost.png')
