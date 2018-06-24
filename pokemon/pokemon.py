@@ -110,7 +110,7 @@ class pokemon:
         await self.bot.send_file(context.message.channel, 'data/pokemon/compost.png')
 
     @_pokemon.command(pass_context=True, name='battle')
-    async def _battle(self, context):
+    async def _battle(self, context, x):
         level = random.randint(1, 100)
         pokemon1 = self.pokemonData[random.randint(1, 150) - 1]
         pokemon2 = self.pokemonData[random.randint(1, 150) - 1]
@@ -135,6 +135,8 @@ class pokemon:
         background.paste(plyrbar, (200, 188), plyrbar)
         enmybar = self.makeEnemyBar(pokemon2)
         background.paste(enmybar, (5, 23), enmybar)
+        if x:
+            background = background.resize(size=(x, 400))
 
         background.save("data/pokemon/compost.png", quality=100)
         await self.bot.send_file(context.message.channel, 'data/pokemon/compost.png')
