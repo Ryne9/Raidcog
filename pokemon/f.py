@@ -54,6 +54,24 @@ pokemon2 = pokemonData[random.randint(1, 150) - 1]
 pokemon1["level"] = level
 pokemon2["level"] = level
 
+pokemonMoveMax = len(pokemon1["moves"]) - 1
+
+pokemon1["learnedMoves"] = [
+    pokemon1["moves"][random.randint(0, pokemonMoveMax)],
+    pokemon1["moves"][random.randint(0, pokemonMoveMax)],
+    pokemon1["moves"][random.randint(0, pokemonMoveMax)],
+    pokemon1["moves"][random.randint(0, pokemonMoveMax)]
+]
+
+pokemonMoveMax = len(pokemon2["moves"]) - 1
+
+pokemon2["learnedMoves"] = [
+    pokemon2["moves"][random.randint(0, pokemonMoveMax)],
+    pokemon2["moves"][random.randint(0, pokemonMoveMax)],
+    pokemon2["moves"][random.randint(0, pokemonMoveMax)],
+    pokemon2["moves"][random.randint(0, pokemonMoveMax)]
+]
+
 image1 = Image.open('data/sprites/' + str(pokemon1["id"]) + 'b.png').convert("RGBA")
 image1 = image1.resize(size=(96 * 3, 96 * 3))
 image2 = Image.open('data/sprites/' + str(pokemon2["id"]) + 'f.png').convert("RGBA")

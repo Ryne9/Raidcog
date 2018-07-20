@@ -291,13 +291,3 @@ class raidcog:
         data = []
         self.save_data(data)
         await self.bot.say("Cleared all raids.")
-
-def check_files():
-    f = "data/raidcog/raids.json"
-    if not dataIO.is_valid_json(f):
-        print("Creating default raids's settings.json...")
-        dataIO.save_json(f, [])
-
-def setup(bot):
-    check_files()
-    bot.add_cog(raidcog(bot))

@@ -1,7 +1,8 @@
-from PIL import Image
-import discord
 import json
 import random
+
+import discord
+from PIL import Image
 from discord.ext import commands
 
 image = Image.open("data/gamecog/level.png")
@@ -192,7 +193,3 @@ class gamecog:
             except:
                 pass
             return await self.game(context, timeout=timeout)
-
-
-def setup(bot):
-    bot.add_cog(gamecog(bot))

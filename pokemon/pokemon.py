@@ -53,7 +53,6 @@ class pokemon:
         healthbar = healthbar.resize(size=(int((health/maxHealth) * 84), 5))
         return healthbar
 
-
     def makePlayerBar(self, pokemon):
         plyrbar = self.playerbar.copy()
         draw = ImageDraw.Draw(plyrbar)
@@ -190,6 +189,3 @@ class pokemon:
 
     def calc_stat(self, stat, level):
         return math.floor((2 * stat * level) / 100) + 5
-
-def setup(bot):
-    bot.add_cog(pokemon(bot))
